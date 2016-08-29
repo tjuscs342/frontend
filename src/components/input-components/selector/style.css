@@ -1,0 +1,19 @@
+.btn-active,
+.btn {
+  min-width: 75px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  padding: 0 5px;
+  color: #888888 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  background: none !important;
+  margin: 2px 3px;
+  border-radius: 3px;
+}
+
+.btn-active {
+  color: white !important;
+  background: #2FA4FF !important;
+}

@@ -1,0 +1,36 @@
+.subHeader,
+.subHeader * {
+  box-sizing: border-box;
+}
+
+.subHeader {
+  overflow: hidden;
+}
+
+.subHeader .menu-item,
+.subHeader .menu-item-selected {
+  display: inline-block;
+  width: 150px;
+  text-align: center;
+  border-bottom: white solid 2px;
+}
+
+.subHeader .menu-item a,
+.subHeader .menu-item-selected a {
+  position: relative;
+}
+
+.subHeader .menu-item a span,
+.subHeader .menu-item-selected a span {
+  position: absolute;
+  left: 0; bottom: 3px;
+  width: 100%;
+}
+
+.subHeader .menu-item-selected a {
+  color: #333;
+}
+
+.subHeader .menu-item-selected {
+  border-bottom: #2FA4FF solid 2px;
+}

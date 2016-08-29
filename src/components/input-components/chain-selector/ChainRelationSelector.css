@@ -1,0 +1,39 @@
+.container {
+  padding-left: 50px;
+  margin: 24px 0;
+  height: 25px;
+  line-height: 25px;
+}
+
+.btn-group {
+  overflow: hidden;
+}
+
+.btn-group > .btn,
+.btn-group > .btn-active {
+  width: 60px;
+  height: 25px;
+  line-height: 25px;
+  border-radius: 0;
+  border: 1px solid #E0E0E0;
+  border-right: 0;
+  color: #888888;
+  padding: 0!important;
+  background: #FFFFFF;
+}
+
+.btn-group > .btn-active {
+  color: #333333;
+  background: #B7DEFC;
+}
+
+.btn-group > .btn:last-child {
+  border-right: 1px solid #E0E0E0;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.btn-group > .btn:first-child {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}

@@ -1,0 +1,33 @@
+.invalid-input:focus {
+  border: 1px solid rgb(255, 126, 0);
+  box-shadow: 0 0 0 2px rgba(236, 89, 23, 0.2);
+}
+
+.promt {
+  position: absolute;
+  top: 60px; left: 0;
+  height: 30px;
+  line-height: 30px;
+  color: rgb(255, 126, 0);
+}
+
+.search {
+  border-radius: 3px;
+  height: 100%; width: 100%;
+  position: relative;
+}
+.search .search-input,
+.search .search-btn {
+  vertical-align: middle;
+}
+.search .search-input {
+}
+.search .search-btn {
+  position: absolute;
+  right: 0; top: 0;
+  background-color: #DCE7EF;
+  width: 40px;
+  text-align: center;
+  border-radius: 0 3px 3px 0;
+  border: 1px solid #d9d9d9;
+}

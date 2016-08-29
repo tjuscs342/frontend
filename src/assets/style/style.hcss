@@ -1,0 +1,319 @@
+.inline {
+  display: inline-block;
+}
+.inline-mid {
+  display: inline-block;
+  vertical-align: middle;
+}
+.border-box {
+  box-sizing: border-box;
+}
+.pointer {
+  cursor: pointer;
+}
+.not-allowed {
+  cursor: not-allowed !important;
+}
+/* btn */
+.btn,
+.btn-theme1,
+.btn-theme2,
+.btn-theme3,
+.btn-theme4,
+.btn-theme5,
+.btn-theme6,
+.btn-theme7,
+.btn-theme8,
+.btn-theme9,
+.btn-theme10,
+.btn-theme11,
+.btn-theme12,
+.btn-theme13 {
+  display: inline-block;
+  border-radius: 3px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 15px;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: center;
+  letter-spacing: 1px;
+  word-spacing: normal;
+}
+.btn-unit-size {
+  width: 80px;
+  padding: 3px;
+  margin-right: 5px;
+}
+.btn-theme1 {
+  background: #2FA4FF;
+  border: 1px solid #2FA4FF;
+  color: white;
+}
+.btn-theme2 {
+  background: #EDEDED;
+  border: 1px solid #DDDDDD;
+  color: #555555;
+}
+.btn-theme3 {
+  background: #00C2D3;
+  border: 1px solid #00C2D3;
+  color: white;
+}
+.btn-theme4 {
+  background: #B7DEFC;
+  color: #333333;
+}
+.btn-theme5 {
+  background: #15B1FF;
+  color: white;
+}
+.btn-theme6 {
+  background: #659FED;
+  color: white;
+}
+
+.btn-theme8 {
+  background: #1BC6B4;
+  color: white;
+}
+.btn-theme9 {
+  background: #FE9C54;
+  color: white;
+}
+.btn-theme10 {
+  background: #DCE7EF;
+  color: #333;
+}
+.btn-theme11 {
+  background: white;
+  color: #2FA4FF;
+}
+.btn-theme12 {
+  background: whtie;
+  color: #d1d1d1;
+  border-color: #eee;
+}
+.btn-theme13 {
+  background: #D5EDFF;
+  color: #5FB9FF;
+  border-color: #D5EDFF;
+}
+.btn-theme7 {
+  background: #D4D4D4;
+  color: white;
+}
+.btn-group > .btn {
+  border-radius: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-right-width: 0;
+  display: inline;
+  vertical-align: middle;
+}
+.btn-group > .btn:first-of-type {
+  border-radius: 3px 0 0 3px;
+}
+
+.btn-group > .btn:last-of-type {
+  border-right-width: 1px;
+  border-radius: 0 3px 3px 0;
+}
+
+.chart-legend {
+  width: 15px;
+  height: 15px;
+  /*border: 1px solid grey;*/
+  border-radius: 3px;
+  margin: 0 5px;
+}
+
+/* text align */
+.text-right {
+  text-align: right
+}
+.text-left {
+  text-align: left
+}
+.text-center {
+  text-align: center
+}
+
+/* height */
+.full-height {
+  height: 100%;
+}
+.full {
+  height: 100%; width: 100%;
+}
+.h25 {
+  height: 25px !important;
+  line-height: 25px !important;
+}
+
+/* font */
+.fs20 {
+  font-size: 20px !important;
+}
+.fs16 {
+  font-size: 16px !important;
+}
+.fs14 {
+  font-size: 14px !important;
+}
+.fs12 {
+  font-size: 12px !important;
+}
+.fc-dark {
+  color: #333;
+}
+.fc-light {
+  color: #888;
+}
+.fc-blue {
+  color: #2FA4FF;
+}
+.fc-hidden {
+  color: #F1F3F4;
+}
+
+/* fixed padding */
+.fixed-position {
+  position: fixed !important;
+}
+.fix-left-column-wrapper {
+  position: relative;
+  padding-left: 100px;
+}
+.fix-left-column {
+  position: absolute;
+  width: 100px;
+  top: 0;
+  left: 0;
+}
+
+.fix-top-row-wrapper {
+  height: 100%;
+  position: relative;
+  padding-top: 30px;
+}
+.fix-top-row {
+  position: absolute;
+  top: 0; left: 0;
+  height: 30px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.vertical-center {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*
+  Ant Design !!!!
+ */
+.vertical-center-modal .ant-modal {
+  top: 0;
+}
+
+/* bottom border */
+.bottom-border {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.border-style {
+  border-style: solid;
+  border-color: #e0e0e0;
+}
+
+.border-style-blue {
+  border-style: solid;
+  border-color: #2FA4FF;
+}
+
+/* Transition */
+.height-transition {
+  -webkit-transition: height 0.2s cubic-bezier(0.215, 0.61, 0.355, 1), padding 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: height 0.2s cubic-bezier(0.215, 0.61, 0.355, 1), padding 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.max-height-transition {
+  -webkit-transition: max-height 0.2s cubic-bezier(0.215, 0.61, 0.355, 1), padding 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: max-height 0.2s cubic-bezier(0.215, 0.61, 0.355, 1), padding 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/* background */
+.bg-grey {
+  background-color: #F1F3F4;
+}
+.bg-white {
+  background-color: #FFFFFF;
+}
+
+/* Overwrite antd Styles !!!!! */
+a:hover,
+a:active {
+  color: #2FA4FF;
+}
+.ant-pagination-item-active {
+  background-color: #15B1FF;
+}
+
+i.waiting {
+  animation: waiting 2s linear infinite ;
+  -moz-animation: waiting 2s linear infinite ;	/* Firefox */
+  -webkit-animation: waiting 2s linear infinite ;	/* Safari 和 Chrome */
+  -o-animation: waiting 2s linear infinite ;
+}
+
+@keyframes waiting
+{
+from {transform: rotate(0deg)}
+to {transform: rotate(360deg)}
+}
+
+@-moz-keyframes waiting /* Firefox */
+{
+from {transform: rotate(0deg)}
+to {transform: rotate(360deg)}
+}
+
+@-webkit-keyframes waiting /* Safari 和 Chrome */
+{
+from {transform: rotate(0deg)}
+to {transform: rotate(360deg)}
+}
+
+@-o-keyframes waiting /* Opera */
+{
+from {transform: rotate(0deg)}
+to {transform: rotate(360deg)}
+}
+
+.hide {
+  display: none;
+}
+
+.selectedText {
+  background-color: #2db7f5;
+  color: white;
+}
+
+.divCenterMiddle {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.divCenterBottom {
+  margin: 0 auto;
+  position: absolute;
+  bottom: 0px;
+}

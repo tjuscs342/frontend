@@ -1,0 +1,72 @@
+.step,
+.step-active {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  width: 50px;
+}
+
+.step > .label,
+.step-active > .label {
+  height: 50px;
+  margin: 0 auto 10px auto;
+  line-height: 50px;
+  border-radius: 50%;
+  font-size: 20px;
+}
+
+.step > .title,
+.step-active > .title {
+  white-space: nowrap;
+  margin-left: -100%;
+  margin-right: -100%;
+}
+
+/* line */
+.line,
+.line-active {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 30px;
+  width: 410px;
+  margin-bottom: 34px;
+}
+
+/* line dot */
+.line > .dot,
+.line-active > .dot {
+  display: inline-block;
+  height: 6px; width: 6px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+.line > .dot:last-child,
+.line-active > .dot:last-child {
+  margin-right: 0;
+}
+
+/* color */
+.step-active > .title{
+  color: #333;
+}
+.step-active > .label {
+  color: white;
+  background: #2FA4FF;
+  border: 1px solid #2FA4FF;
+}
+.line-active > .dot {
+  background: #2FA4FF;
+}
+.step > .title {
+  color: #9da9b3;
+}
+.step > .label {
+  color: #b2bfc9;
+  background: #e6f3fc;
+  border: 1px solid #cddce7;
+}
+.line > .dot {
+  background: #cddce7;
+}

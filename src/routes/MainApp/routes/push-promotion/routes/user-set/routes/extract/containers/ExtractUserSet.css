@@ -1,0 +1,11 @@
+.menuItem {
+  width: 60px
+}
+
+.submit-btn {
+  display: block;
+  padding: 0;
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 10px;
+}

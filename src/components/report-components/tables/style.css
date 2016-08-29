@@ -1,0 +1,81 @@
+.table,
+.th,
+.td,
+.table1,
+.table2,
+.table3,
+.table5 {
+  border-collapse: collapse;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.table .th,
+.table .td {
+  padding: 10px 0
+}
+.table .th {
+  border: 0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.table .tr:first-of-type .td {
+  border-top: 1px solid #e0e0e0;
+}
+.table .tr:last-of-type .td {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table .th:last-of-type,
+.table .td:last-of-type {
+  border-right: 1px solid #e0e0e0;
+}
+.table .th:first-of-type,
+.table .td:first-of-type {
+  border-left: 1px solid #e0e0e0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+/* Specific Rules */
+.table1 {
+  width: 100%;
+  margin: 0;
+}
+.table1 .th,
+.table1 .td {
+  width: 50%;
+}
+
+.table2 {
+  width: 100%;
+  margin: 0;
+}
+.table2 .th,
+.table2 .td {
+  width: 33.333333333333%;
+}
+
+.table3 {
+  width: 100%;
+  margin: 0;
+}
+.table3 .th,
+.table3 .td {
+  width: 50%;
+  border-right: 1px solid #e0e0e0;
+}
+
+.table5 {
+  width: 100%;
+  margin: 0;
+}
+.table5 .th,
+.table5 .td {
+  width: 25%;
+}

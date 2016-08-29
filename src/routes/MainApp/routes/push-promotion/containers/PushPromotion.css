@@ -1,0 +1,33 @@
+.menu {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.menu-item,
+.menu-item-selected {
+  display: inline-block;
+  height: 30px; width: 125px;
+  line-height: 30px;
+  border: 1px solid #2FA4FF;
+  border-right: 0;
+  font-size: 14px;
+}
+
+.menu > .menu-item:first-child,
+.menu > .menu-item-selected:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.menu > .menu-item:last-child,
+.menu > .menu-item-selected:last-child {
+  border-right: 1px solid #2FA4FF;
+  border-radius: 0 3px 3px 0;
+}
+
+.menu-item-selected {
+  background: #2FA4FF;
+}
+
+.menu-item-selected > a {
+  color: white;
+}

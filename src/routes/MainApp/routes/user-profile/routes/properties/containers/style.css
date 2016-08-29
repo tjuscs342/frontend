@@ -1,0 +1,55 @@
+.submit-btn {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: white;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.zigzag {
+    position: relative;
+    height: 45px;
+    line-height: 45px;
+    padding-right: 10px;
+    background: #FCDDC1;
+    overflow: hidden;
+    margin: 0 auto 15px auto;
+    width: 200px;
+    white-space: nowrap;
+}
+
+.zigzag:after {
+  background: linear-gradient( 45deg, transparent, transparent 10px, #F0F6FA 10px, #F0F6FA 20px ), linear-gradient( 135deg, transparent, transparent 10px, #F0F6FA 10px, #F0F6FA 20px );
+  background-repeat: repeat-y;
+  background-size: 10px 10px;
+  content: " ";
+  display: block;
+  position: absolute;
+  top: -2.5px;
+  right: 0px;
+  width: 10px;
+  height: 50px;
+}
+
+.dollar,
+.price {
+  display: inline-block;
+  height: 100%;
+  text-align: center;
+}
+
+.dollar {
+  width: 30px;
+  margin-right: 10px;
+  background: #FCB06B;
+  color: white;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.price {
+  width: 140px;
+}
