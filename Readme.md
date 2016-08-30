@@ -14,7 +14,7 @@
 
 <br id='login'>
 
-- ##### 设置新密码 [返回目录](#menu)
+- ##### 登陆 [返回目录](#menu)
 
     - 请求方式 ：`POST` `http://localhost/login`
 
