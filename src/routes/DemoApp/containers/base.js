@@ -96,7 +96,6 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
   return {
-    persistentActions: bindActionCreators(BaseAction, dispatch),
     actions: bindActionCreators(BaseAction, dispatch)
   }
 }
