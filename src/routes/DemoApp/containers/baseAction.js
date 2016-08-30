@@ -1,6 +1,6 @@
 import fetchPro from 'SRC/utils/fetchPro'
 import api from 'SRC/api'
-import getUser from 'SRC/utils/getUser'
+import { setUser } from 'SRC/utils/getUser'
 import logger from 'SRC/utils/logger'
 export function setVisible() {
   return {
@@ -9,7 +9,7 @@ export function setVisible() {
 }
 function loginWaiting() {
   return {
-    type: 'LOGIN_WAITING'
+    type: 'BASE@LOGIN_WAITING'
   }
 }
 function loginDone(value) {
@@ -17,17 +17,31 @@ function loginDone(value) {
     error: value.status === 'fail',
     success: value.status === 'succ'
   }
+  if (result.success) {
+    setUser(value.data.userName, 2)
+  }
   return {
-    type: 'LOGIN_DONE',
+    type: 'BASE@LOGIN_DONE',
     result
   }
 }
-export function login(text) {
+export function clearModal() {
+  return {
+    type: 'BASE@CLEAR_MODAL'
+  }
+}
+export function logout() {
+  setUser('', -1)
+  return {
+    type: 'BASE@LOGOUT'
+  }
+}
+export function login(userName, password) {
   return (dispatch) => {
     dispatch(loginWaiting())
     const bodyData = new FormData()
-    bodyData.append('user', getUser().name)
-    bodyData.append('text', text)
+    bodyData.append('userName', userName)
+    bodyData.append('password', password)
     return fetchPro(api('base:login'), {
       method: 'POST',
       body: bodyData

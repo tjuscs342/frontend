@@ -19,6 +19,8 @@ class Base extends Component {
     super(props)
     this.setVisible = this.setVisible.bind(this)
     this.login = this.login.bind(this)
+    this.logout = this.logout.bind(this)
+    this.clearModal = this.clearModal.bind(this)
   }
   setVisible() {
     this.props.actions.setVisible()
@@ -29,6 +31,12 @@ class Base extends Component {
     } else {
       this.props.actions.setVisible()
     }
+  }
+  logout() {
+    this.props.actions.logout()
+  }
+  clearModal() {
+    this.props.actions.clearModal()
   }
   render() {
     const mainMenu = this.props.location.pathname.split('/')[1] || 'home'
@@ -49,6 +57,8 @@ class Base extends Component {
           isShowLogin={isShowLogin}
           isLogining={isLogining}
           login={this.login}
+          logout={this.logout}
+          clearModal={this.clearModal}
           success={success}
           error={error}
           msg={msg}

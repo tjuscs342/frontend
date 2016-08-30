@@ -1,12 +1,12 @@
-function getCookie(name) { // eslint-disable-line
-  const value = '; ' + document.cookie // eslint-disable-line
-  const parts = value.split("; " + name + "=") // eslint-disable-line
-  if (parts.length === 2) return parts.pop().split(';').shift()
-}
+import { getCookie, setCookie } from 'SRC/utils/cookie.js'
 
 export default function getUser() {
   const name = getCookie('productName_user') || ''
   return {
     name
   }
+}
+
+export function setUser(userName, time) {
+  setCookie('productName_user', userName, time)
 }

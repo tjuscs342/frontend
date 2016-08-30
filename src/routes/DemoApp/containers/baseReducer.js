@@ -22,6 +22,13 @@ const reducerMap = {
     return state.set('isLogining', Immutable.fromJS(true))
                 .set('success', Immutable.fromJS(false))
                 .set('error', Immutable.fromJS(false))
+  },
+  'BASE@LOGOUT': (state, action) => {
+    return state.set('success', Immutable.fromJS(true))
+  },
+  'BASE@CLEAR_MODAL': (state, action) => {
+    return state.set('success', Immutable.fromJS(false))
+                .set('error', Immutable.fromJS(false))
   }
 }
 

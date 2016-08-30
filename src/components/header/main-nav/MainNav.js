@@ -29,10 +29,10 @@ class MainNav extends Component {
     }
   }
   success() {
-    document.getElementById('msgInput').value = ''
     Modal.success({
-      title: '登陆成功'
+      title: getUser().name !== '' ? '登陆成功' : '您已登出'
     })
+    this.props.clearModal()
   }
 
   error() {
@@ -43,6 +43,7 @@ class MainNav extends Component {
           <p>由于网络或其他原因该留言未能提交，请稍后再试。</p>
         </div>
     })
+    this.props.clearModal()
   }
   render() {
     const setVisible = this.props.setVisible
@@ -50,6 +51,7 @@ class MainNav extends Component {
     const isLogining = this.props.isLogining
     const activeItem = this.props.selectedKeys[0]
     const login = this.props.login
+    const logout = this.props.logout
     const userName = getUser().name
     return (
       <_row style={this.props.style} styleName="main-nav" type="flex" align="bottom">
@@ -76,14 +78,20 @@ class MainNav extends Component {
           </div>
         </_col>
         <_col span={4} styleName="main-nav-header">
-          <div className="divCenterMiddle">
+          <div className="divCenterBottom">
             {
               userName === '' ?
-                <div className="pointer" styleName="logout-btn" onClick={setVisible}>login</div>
+                <div className="pointer" styleName="logout-btn" onClick={setVisible} style={{ marginBottom: '10px' }}>login</div>
               :
-                <div className="pointer">
-                  {userName}
-                  <i className="fa fa-sign-out" ></i>
+                <div>
+                  <span>{userName}</span>
+                  <span
+                    className="pointer"
+                    style={{ display: 'inline-block', marginLeft: '15px' }}
+                    onClick={logout}
+                    >
+                    <i className="fa fa-sign-out" style={{ color: '#2E99EC' }} ></i>
+                  </span>
                 </div>
             }
           </div>
@@ -144,7 +152,9 @@ MainNav.propTypes = {
   msg: React.PropTypes.string,
   login: React.PropTypes.func.isRequired,
   success: React.PropTypes.bool,
-  error: React.PropTypes.bool
+  error: React.PropTypes.bool,
+  logout: React.PropTypes.func,
+  clearModal: React.PropTypes.func
 }
 
 MainNav.defaultProps = {

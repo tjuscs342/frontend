@@ -13,18 +13,22 @@ export const mockAPIConfig = {
   enabled: true,
   rules: [
     {
-      // 模拟未登录状态
-      enabled: false,
-      url: new RegExp('http://data.god.pt.xiaomi.com/result/datas/[\\d]+/[\\d]+/[\\w]+/[\\w+]'),
+      // 模拟登录
+      enabled: true,
+      url: new RegExp('http://121.42.202.145/login'),
       type: 'normal',
-      dalay: 1000,
+      delay: 1000,
       response: {
-        status: 'login'
+        status: 'succ',
+        data: {
+          uid: 1,
+          userName: 'ljm'
+        }
       }
     }, {
       // 模拟画像报告数据获取 - 差异化特征 app安装
       enabled: false,
-      url: new RegExp('http://data.god.pt.xiaomi.com/result/datas'),
+      url: new RegExp('http://baidu.com'),
       type: 'normal',
       // type: 'error',
       // error: FETCH_TIMEOUT,
@@ -47,33 +51,6 @@ export const mockAPIConfig = {
             return { status: 'fail' }
         }
       }
-    }, {
-      // 模拟提取用户集上传
-      enabled: false,
-      url: new RegExp('http://data.god.pt.xiaomi.com/data/tags'),
-      type: 'normal',
-      delay: 10000, // 10 s
-      response: {
-        status: 'succ',
-        result: 111
-      }
-    }, {
-      // 模拟提取用户集上传
-      enabled: false,
-      url: new RegExp('http://data.god.pt.xiaomi.com/data/users'),
-      type: 'normal',
-      delay: 1000, // 1 s
-      response: {
-        status: 'succ',
-        result: 111
-      }
-    }, {
-      // 模拟 我的用户集 用户画像 table
-      enabled: false,
-      url: new RegExp('http://data.god.pt.xiaomi.com/user/datas/songzehao'),
-      type: 'normal',
-      // eslint-disable-next-line
-      response: { "status":"succ","result":[{"count":62512,"description":"游戏消费能力较强","id":1275,"name":"测试","notsql":"","persql":"first_active_time > 0  AND (purchase_game_level in [\"3\"])","source":"online","status":1,"tags":"1,2,3,63,86,112,113,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106","time":"2016-08-12 16:27:24.0","user":"songzehao"},{"count":85199660,"description":"性别男","id":1273,"name":"打车","notsql":"","persql":"first_active_time > 0  AND user_sex in [\"1\"]","source":"online","status":1,"tags":"89,1,2,3,63,86,112,113,71,72,64,87,8,9,10,11,67,74,75,77,24,62,65,66,68,73,13,14,16,17,18,20,49,50,51,52,53,54,55,56,57,58,59,60,78,79,80,81,82,83,84,85,4,5,6,69","time":"2016-08-12 15:46:40.0","user":"songzehao"},{"count":6719715,"description":"性别男,年龄18-21","id":1268,"name":"klj","notsql":"","persql":"first_active_time > 0  AND user_sex in [\"1\"] AND user_age in [\"2\"]","source":"online","status":1,"tags":"","time":"2016-08-12 15:43:18.0","user":"songzehao"},{"count":2395584,"description":"性别女,年龄22-24","id":1267,"name":"rtrtr","notsql":"","persql":"first_active_time > 0  AND user_sex in [\"2\"] AND user_age in [\"3\"]","source":"online","status":1,"tags":"","time":"2016-08-12 15:42:51.0","user":"songzehao"}] }
     }
   ]
 }
