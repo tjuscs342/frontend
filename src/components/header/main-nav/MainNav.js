@@ -40,7 +40,7 @@ class MainNav extends Component {
       title: '错误',
       content:
         <div>
-          <p>由于网络或其他原因该留言未能提交，请稍后再试。</p>
+          <p>{this.props.msg}</p>
         </div>
     })
     this.props.clearModal()

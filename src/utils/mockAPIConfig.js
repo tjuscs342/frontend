@@ -23,7 +23,8 @@ export const mockAPIConfig = {
         data: {
           uid: 1,
           userName: 'ljm'
-        }
+        },
+        msg: '密码错误'
       }
     }, {
       // 模拟画像报告数据获取 - 差异化特征 app安装

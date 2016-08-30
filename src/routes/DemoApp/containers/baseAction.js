@@ -22,7 +22,8 @@ function loginDone(value) {
   }
   return {
     type: 'BASE@LOGIN_DONE',
-    result
+    result,
+    value
   }
 }
 export function clearModal() {

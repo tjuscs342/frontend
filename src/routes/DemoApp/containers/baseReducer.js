@@ -17,6 +17,7 @@ const reducerMap = {
                 .set('success', Immutable.fromJS(action.result.success || false))
                 .set('error', Immutable.fromJS(action.result.error || false))
                 .set('isShowLogin', Immutable.fromJS(false))
+                .set('msg', Immutable.fromJS(action.value.msg || ''))
   },
   'BASE@LOGIN_WAITING': (state, action) => {
     return state.set('isLogining', Immutable.fromJS(true))
