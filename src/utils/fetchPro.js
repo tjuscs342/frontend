@@ -9,6 +9,8 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   mockAPIConfig = require('./mockAPIConfig').default
 }
+// 线上也可以使用mock数据
+mockAPIConfig = require('./mockAPIConfig').default
 
 const defaultConfig = {
 
