@@ -8,7 +8,7 @@ import * as BaseAction from './baseAction'
 
 
 const menuItems = [
-  { key: 'home', name: 'Home', link: '/home' },
+  { key: 'ask', name: '请假申请', link: '/ask' },
   { key: 'page2', name: 'page2', link: '/page2' },
   { key: 'page3', name: 'page3', link: '/page3' },
   { key: 'page4', name: 'page4', link: '/page4' }
@@ -21,9 +21,21 @@ class Base extends Component {
     this.login = this.login.bind(this)
     this.logout = this.logout.bind(this)
     this.clearModal = this.clearModal.bind(this)
+    this.goToAsk = this.goToAsk.bind(this)
+  }
+  componentDidMount() {
+    if (this.props.state.home) {
+      this.goToAsk()
+      this.context.router.push({
+        pathname: '/ask'
+      })
+    }
   }
   setVisible() {
     this.props.actions.setVisible()
+  }
+  goToAsk() {
+    this.props.actions.goToAsk()
   }
   login(userName, password) {
     if (userName.length !== 0 && password.length !== 0) {
@@ -39,36 +51,43 @@ class Base extends Component {
     this.props.actions.clearModal()
   }
   render() {
-    const mainMenu = this.props.location.pathname.split('/')[1] || 'home'
-    const height = this.props.params.reportType === 'diamond' ? 0 : 73
+    const mainMenu = this.props.location.pathname.split('/')[1] || 'ask'
+    const height = this.props.params.reportType === 'diamond' ? 0 : 5.3
     const isShowLogin = this.props.state.isShowLogin
     const isLogining = this.props.state.isLogining
     const msg = this.props.state.msg
     const success = this.props.state.success
     const error = this.props.state.error
-    const footer = 20
+    const footer = 2
     return (
-      <div style={{ height: `${window.innerHeight - footer}px`, minWidth: '1000px' }}>
-        <MainNav
-          style={{ height: `${height}px` }}
-          selectedKeys={[mainMenu]}
-          menuItems={menuItems}
-          setVisible={this.setVisible}
-          isShowLogin={isShowLogin}
-          isLogining={isLogining}
-          login={this.login}
-          logout={this.logout}
-          clearModal={this.clearModal}
-          success={success}
-          error={error}
-          msg={msg}
-          />
-        <div style={{ height: `${window.innerHeight - footer - height}px` }}>
-          {this.props.children}
+      <div className="container" style={{ height: `${window.innerHeight}px` }}>
+        <div
+          className="header"
+          >
+          <MainNav
+            selectedKeys={[mainMenu]}
+            menuItems={menuItems}
+            setVisible={this.setVisible}
+            isShowLogin={isShowLogin}
+            isLogining={isLogining}
+            login={this.login}
+            logout={this.logout}
+            clearModal={this.clearModal}
+            success={success}
+            error={error}
+            msg={msg}
+            />
         </div>
-        <footer style={{ height: footer, width: '100%', textAlign: 'center', background: '#23292E', color: 'white' }}>
+
+        <div className="body">
+          {
+            // this.props.children
+          }
+          abckd
+        </div>
+        <span className="footer">
           Powered by <a href="https://github.com/AllanJian" target="_blank">AllanJian</a>.
-        </footer>
+        </span>
       </div>
     )
   }
@@ -87,6 +106,9 @@ Base.propTypes = {
   state: React.PropTypes.object
 }
 
+Base.contextTypes = {
+  router: React.PropTypes.object
+}
 
 function mapState(state) {
   return {

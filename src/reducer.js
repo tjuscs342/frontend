@@ -21,7 +21,6 @@ const reducerMap = {
 
 function persistentStore(state = initialState, action) {
   if (reducerMap[action.type]) {
-    console.log('action.type', action.type)
     return reducerMap[action.type](state, action)
   }
   return state

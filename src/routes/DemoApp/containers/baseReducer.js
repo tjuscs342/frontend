@@ -4,7 +4,8 @@ const initialState = Immutable.fromJS({
   isLogining: false,
   msg: '',
   error: false,
-  success: false
+  success: false,
+  home: location.href.split('/').length < 6
 })
 
 /* eslint-disable no-unused-vars, arrow-body-style */
@@ -30,6 +31,9 @@ const reducerMap = {
   'BASE@CLEAR_MODAL': (state, action) => {
     return state.set('success', Immutable.fromJS(false))
                 .set('error', Immutable.fromJS(false))
+  },
+  'BASE@GO_TO_ASK': (state, action) => {
+    return state.set('home', Immutable.fromJS(false))
   }
 }
 

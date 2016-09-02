@@ -12,6 +12,7 @@ const _menu = require('antd/lib/menu')
 const Modal = require('antd/lib/modal')
 const Button = require('antd/lib/button')
 const Input = require('antd/lib/input')
+const Icon = require('antd/lib/icon')
 const MenuItem = _menu.Item
 
 class MainNav extends Component {
@@ -30,6 +31,7 @@ class MainNav extends Component {
   }
   success() {
     Modal.success({
+      width: '90%',
       title: getUser().name !== '' ? '登陆成功' : '您已登出'
     })
     this.props.clearModal()
@@ -38,6 +40,7 @@ class MainNav extends Component {
   error() {
     Modal.error({
       title: '错误',
+      width: '90%',
       content:
         <div>
           <p>{this.props.msg}</p>
@@ -55,42 +58,43 @@ class MainNav extends Component {
     const userName = getUser().name
     return (
       <_row style={this.props.style} styleName="main-nav" type="flex" align="bottom">
-        <_col span={3} styleName="main-nav-header">
+        <_col span={6} styleName="main-nav-header">
           <div styleName="logo" className="divCenterMiddle">
             Logo
           </div>
 
         </_col>
-        <_col span={3} styleName="main-nav-header">
-          <div styleName="productName" style={{ fontSize: '18px' }} className="divCenterMiddle">
-            Product Name
+        <_col span={12} styleName="main-nav-header">
+          <div styleName="productName" className="divLeftMiddle">
+            请假系统
           </div>
         </_col>
-        <_col span={14} styleName="main-nav-header">
-          <div className="divCenterBottom">
-            <_menu selectedKeys={[`.$${activeItem}`]} mode="horizontal" styleName="main-nav-menu">
-              {this.props.menuItems.map(menuItem => (
-                <MenuItem key={menuItem.key} styleName={activeItem === menuItem.key ? 'menu-item-selected' : 'menu-item'}>
-                  <Link to={menuItem.link}>{menuItem.name}</Link>
-                </MenuItem>
-              ))}
-            </_menu>
-          </div>
-        </_col>
-        <_col span={4} styleName="main-nav-header">
-          <div className="divCenterBottom">
+        {
+          // <_col span={14} styleName="main-nav-header">
+          //   <div className="divCenterBottom">
+          //     <_menu selectedKeys={[`.$${activeItem}`]} mode="horizontal" styleName="main-nav-menu">
+          //       {this.props.menuItems.map(menuItem => (
+          //         <MenuItem key={menuItem.key} styleName={activeItem === menuItem.key ? 'menu-item-selected' : 'menu-item'}>
+          //           <Link to={menuItem.link}>{menuItem.name}</Link>
+          //         </MenuItem>
+          //       ))}
+          //     </_menu>
+          //   </div>
+          // </_col>
+        }
+        <_col span={6} styleName="main-nav-header">
+          <div className="divCenterMiddle">
             {
               userName === '' ?
-                <div className="pointer" styleName="logout-btn" onClick={setVisible} style={{ marginBottom: '10px' }}>login</div>
+                <Icon type="user" className="center" onClick={setVisible} />
               :
-                <div>
+                <div style={{ textAlign: 'center' }}>
                   <span>{userName}</span>
                   <span
-                    className="pointer"
-                    style={{ display: 'inline-block', marginLeft: '15px' }}
+                    style={{ display: 'inline-block', marginLeft: '0.5rem' }}
                     onClick={logout}
                     >
-                    <i className="fa fa-sign-out" style={{ color: '#2E99EC' }} ></i>
+                    <Icon type="logout" />
                   </span>
                 </div>
             }
@@ -98,6 +102,7 @@ class MainNav extends Component {
         </_col>
         <Modal
           title="Login"
+          width="90%"
           visible={isShowLogin}
           onOk={setVisible}
           onCancel={setVisible}
@@ -118,8 +123,9 @@ class MainNav extends Component {
             </Button>
           ]}
           >
-          <div style={{ width: '350px', margin: '0 auto' }}>
+          <div>
             <Input
+              className="modal"
               addonBefore="username:"
               id="userName"
               style={{ width: '100%' }}

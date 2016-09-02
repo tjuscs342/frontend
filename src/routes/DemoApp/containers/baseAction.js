@@ -26,6 +26,12 @@ function loginDone(value) {
     value
   }
 }
+// 首页跳转到ask
+export function goToAsk() {
+  return {
+    type: 'BASE@GO_TO_ASK'
+  }
+}
 export function clearModal() {
   return {
     type: 'BASE@CLEAR_MODAL'

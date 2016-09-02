@@ -2,7 +2,7 @@
   background: #23292E;
 
   color: #F6F6F6;
-  font-size: 14px;
+  font-size: 1.4rem;
 
   height: 100%;
   overflow: hidden;
@@ -11,19 +11,19 @@
 }
 
 .main-nav-header {
-  font-size: 14px;
+  font-size: 1.8rem;
   height: 100%;
   overflow: hidden;
 }
 .main-nav-menu {
   background: inherit;
   border: 0;
-  line-height: 30px;
+  line-height: 3.0rem;
 }
 
 .main-nav-menu li {
-  font-size: 18px;
-  /*padding-bottom: 10px;*/
+  font-size: 1.8rem;
+  /*padding-bottom: 10rem;*/
   border-bottom: 0 !important;
   color: #858585 !important;
 }
@@ -34,15 +34,15 @@
 
 .main-nav-menu li.menu-item {
   border-bottom: 5px solid #23292E !important;
-  width: 140px;
-  font-size: 16px;
+  width: 14rem;
+  font-size: 1.6rem;
   text-align: center;
 }
 .main-nav-menu li.menu-item-selected {
   color: #F6F6F6 !important;
   border-bottom: 5px solid #2FA4FF !important;
-  width: 140px;
-  font-size: 16px;
+  width: 14rem;
+  font-size: 1.6rem;
   text-align: center;
 }
 
@@ -51,20 +51,15 @@
 }
 
 .logout-btn {
-  margin: 0 auto;
-  font-size: 14px;
+  margin: 0 1rem 1rem 0;
   border: 1px solid #2E99EC;
   color: #2E99EC;
-  border-radius: 5px;
-  width: 60px;
+  border-radius: 0.5rem;
+  width: 6rem;
   text-align: center;
 }
 .logo, .productName {
-  width: 100px;
-  min-width: 100px;
-
   overflow: hidden;
-
   text-align: center;
 }
 .logo img,
@@ -72,12 +67,17 @@
   display: block;
   vertical-align: middle;
   color: #858585 !important;
-  margin-top: 5px;
+  margin-top: 0.5rem;
   width: 100%;
   font-weight: bold;
 }
 .logo span {
   border-top: 1px solid #858585;
-  padding-top: 2px;
-  letter-spacing: 1px;
+  padding-top: 0.2rem;
+  letter-spacing: 0.1rem;
+}
+.modal {
+  width: 90%;
+  display: block;
+  margin: 0 auto;
 }
