@@ -4,11 +4,11 @@
   "description": "the o2o project",
   "scripts": {
     "clean": "rimraf dist",
-    "copy-static": "rm -rf ../src/main/webapp/static  && cp -r ./dist/static ../src/main/webapp/",
+    "copy-static": "rm -rf ./remote-dist/static && rm ./remote-dist/index.html && cp -r ./dist/* ./remote-dist",
     "build:webpack": "cross-env NODE_ENV=production webpack --config build/webpack.config.prod.js",
     "quick:build:webpack": "cross-env NODE_ENV=production webpack --config build/webpack.config.prod.quick.js --display-chunks",
     "quick:build:detail:webpack": "cross-env NODE_ENV=production webpack --config build/webpack.config.prod.quick.js --display-chunks --display-modules",
-    "build": "npm run clean && npm run build:webpack",
+    "build": "npm run clean && npm run build:webpack && npm run copy-static",
     "qb": "npm run clean && npm run quick:build:webpack",
     "qbd": "npm run clean && npm run quick:build:detail:webpack",
     "start": "node build/devServer.js",
