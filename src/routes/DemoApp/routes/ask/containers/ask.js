@@ -2,8 +2,9 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './ask.css'
-import { Select, Radio, Checkbox, Button, DatePicker, TimePicker, InputNumber, Form, Cascader, Icon } from 'antd'
+import { Select, Radio, Checkbox, Button, DatePicker, TimePicker, InputNumber, Form, Cascader, Icon, Input } from 'antd'
 const Option = Select.Option
+import { Link } from 'react-router'
 const RadioGroup = Radio.Group
 const FormItem = Form.Item
 
@@ -12,7 +13,7 @@ class Ask extends Component {
     super(props)
     this.handleReset = this.handleReset.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.checkBirthday = this.checkBirthday.bind(this)
+    this.checkBegin = this.checkBegin.bind(this)
     this.checkPrime = this.checkPrime.bind(this)
   }
 
@@ -40,9 +41,9 @@ class Ask extends Component {
     })
   }
 
-  checkBirthday(rule, value, callback) {
-    if (value && value.getTime() >= Date.now()) {
-      callback(new Error('你不可能在未来出生吧!'))
+  checkBegin(rule, value, callback) {
+    if (value && value.getTime() < Date.now()) {
+      callback(new Error('这天已经过去了!'))
     } else {
       callback()
     }
@@ -57,195 +58,119 @@ class Ask extends Component {
   }
 
   render() {
-    const address = [{
-      value: 'zhejiang',
-      label: '浙江',
-      children: [{
-        value: 'hangzhou',
-        label: '杭州'
-      }, {
-        value: 'shaxing',
-        label: '绍兴'
-      }, {
-        value: 'shaoxng',
-        label: '绍兴'
-      }, {
-        value: 'shaoxig',
-        label: '绍兴'
-      }, {
-        value: 'shaoxg',
-        label: '绍兴'
-      }, {
-        value: 'haoxing',
-        label: '绍兴'
-      }, {
-        value: 'saoxing',
-        label: '绍兴'
-      }, {
-        value: 'shing',
-        label: '绍兴'
-      }, {
-        value: 'shaoxg',
-        label: '绍兴'
-      }, {
-        value: 'shaoxin',
-        label: '绍兴'
-      }]
-    }, {
-      value: 'henan',
-      label: '河南',
-      children: [{
-        value: 'zhengzhou',
-        label: '郑州'
-      }]
-    }]
     const { getFieldProps } = this.props.form
-    const selectProps = getFieldProps('select', {
+    const vacationTypeProps = getFieldProps('vacationType', {
       rules: [
-        { required: true, message: '请选择您的国籍' }
+        { required: true, message: '请选择您的假期类型' }
       ]
     })
-    const multiSelectProps = getFieldProps('multiSelect', {
+    const reasonProps = getFieldProps('vacationReason', {
       rules: [
-        { required: true, message: '请选择您喜欢的颜色', type: 'array' }
+        { required: true, message: '请描述请假原因' }
       ]
     })
-    const radioProps = getFieldProps('radio', {
-      rules: [
-        { required: true, message: '请选择您的性别' }
-      ]
-    })
-    const birthdayProps = getFieldProps('birthday', {
+    const vacationBeginProps = getFieldProps('vacationBegin', {
       rules: [
         {
           required: true,
           type: 'date',
-          message: '你的生日是什么呢？'
+          message: '请假的开始时间'
         }, {
-          validator: this.checkBirthday
+          validator: this.checkBegin
         }
       ]
     })
-    const timeProps = getFieldProps('time', {
-      getValueFromEvent: (value, timeString) => timeString,
+    const vacationEndProps = getFieldProps('vacationEnd', {
       rules: [
-        { required: true, message: '请选择一个时间' }
+        {
+          required: true,
+          type: 'date',
+          message: '请假的结束时间'
+        }
       ]
-    })
-    const primeNumberProps = getFieldProps('primeNumber', {
-      rules: [{ validator: this.checkPrime }]
-    })
-    const addressProps = getFieldProps('address', {
-      rules: [{ required: true, type: 'array' }]
     })
     const formItemLayout = {
       labelCol: { span: 7 },
-      wrapperCol: { span: 12 }
+      wrapperCol: { span: 15 }
     }
     return (
       <Form
         horizontal
         form={this.props.form}
-        style={{ marginTop: '150px' }}
+        style={{
+          height: '100%'
+        }}
         >
-        <FormItem
-          {...formItemLayout}
-          label="国籍"
-          >
-          <Select {...selectProps} placeholder="请选择国家" style={{ width: '100%' }}>
-            <Option value="china">中国</Option>
-            <Option value="use">美国</Option>
-            <Option value="japan">日本</Option>
-            <Option value="korean">韩国</Option>
-            <Option value="Thailand">泰国</Option>
-          </Select>
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="喜欢的颜色"
-          >
-          <Select {...multiSelectProps} multiple placeholder="请选择颜色" style={{ width: '100%' }}>
-            <Option value="red">红色</Option>
-            <Option value="orange">橙色</Option>
-            <Option value="yellow">黄色</Option>
-            <Option value="green">绿色</Option>
-            <Option value="blue">蓝色</Option>
-          </Select>
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="性别"
-          >
-          <RadioGroup {...radioProps}>
-            <Radio value="male">男</Radio>
-            <Radio value="female">女</Radio>
-          </RadioGroup>
-          <span><Icon type="info-circle-o" /> 暂不支持其它性别</span>
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="兴趣爱好"
-          >
-          <Checkbox
-            {...getFieldProps('eat', {
-              valuePropName: 'checked'
-            })}
+        <div className="container">
+          <FormItem
+            {...formItemLayout}
+            label="直接主管"
             >
-            吃饭饭
-          </Checkbox>
-          <Checkbox
-            {...getFieldProps('sleep', {
-              valuePropName: 'checked'
-            })}
+            接口传的某人
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="请假类型"
             >
-            睡觉觉
-          </Checkbox>
-          <Checkbox
-            {...getFieldProps('beat', {
-              valuePropName: 'checked'
-            })}
+            <Select {...vacationTypeProps} placeholder="请选择假期类型" style={{ width: '85%' }}>
+              <Option value="year">带薪年假</Option>
+              <Option value="sick">病假</Option>
+              <Option value="personal">事假</Option>
+              <Option value="marry">婚假</Option>
+              <Option value="diedWay">丧假路途假</Option>
+              <Option value="checkBaby">产检假</Option>
+              <Option value="lostBaby">流产假</Option>
+              <Option value="baby">产假</Option>
+              <Option value="feed">哺乳假</Option>
+              <Option value="workInjury">工伤假</Option>
+            </Select>
+          </FormItem>
+          <FormItem
+            wrapperCol={{ span: 12, offset: 7 }}
+            style={{ marginTop: '-1rem', marginBottom: '0rem' }}
             >
-            打豆豆
-          </Checkbox>
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="生日"
-          >
-          <DatePicker {...birthdayProps} />
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="选一个时间"
-          >
-          <TimePicker {...timeProps} />
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="8~12间的质数"
-          >
-          <InputNumber {...primeNumberProps} min={8} max={12} />
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="选择地址"
-          >
-          <Cascader {...addressProps} options={address} />
-        </FormItem>
-
-        <FormItem
-          wrapperCol={{ span: 12, offset: 7 }}
-          >
-          <Button type="primary" onClick={this.handleSubmit}>确定</Button>
-          <Button type="ghost" onClick={this.handleReset}>重置</Button>
-        </FormItem>
+            <Link to="/details">
+              <span className="ourColor">查看假期类型 </span> <Icon type="circle-o-right" />
+            </Link>
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="请假原因"
+            >
+            <Input
+              {...reasonProps}
+              type="textarea"
+              rows={2}
+              style={{ width: '85%' }}
+              />
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="工作交接人"
+            >
+            <Input
+              style={{ width: '85%' }}
+              />
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="开始时间"
+            >
+            <DatePicker {...vacationBeginProps} />
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="结束时间"
+            >
+            <DatePicker {...vacationEndProps} />
+          </FormItem>
+          <FormItem
+            wrapperCol={{ span: 12, offset: 7 }}
+            >
+            <Button type="primary" onClick={this.handleSubmit}>确定</Button>
+            <Button type="ghost" style={{ marginLeft: '1rem' }} onClick={this.handleReset}>重置</Button>
+          </FormItem>
+        </div>
       </Form>
     )
   }

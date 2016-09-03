@@ -1,6 +1,9 @@
 html {
   font-size: 62.5%
 }
+.ourColor {
+  color: #2FA4FF;
+}
 .container {
   display: flex;
   flex-flow: column;
@@ -11,15 +14,50 @@ html {
 }
 .header {
   height: 10%;
+  width: 100%;
+
+  position: fixed;;
+  top: 0;
+
+  z-index: 100;
+}
+.fix-top-row {
+  height: 10%;
+  width: 100%;
+
+  position: fixed;;
+  top: 10%;
+
+  z-index: 100;
+
+  background-color: white;
 }
 .body {
+  width: 100%;
+  position: absolute;;
+  top: 20%;
+  height: 75%;
+  padding: 0 0 5% 0;
+
+
 
 }
 .footer {
   height: 5%;
+  width: 100%;
+
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+
   text-align: center;
+  vertical-align: middle;
+  font-size: 1rem;
   background: #23292E;
   color: white;
+}
+.ant-form-item {
+  margin-bottom: 1rem;
 }
 .fs10 {
   font-size: 1.0rem;
@@ -44,7 +82,7 @@ html {
 /* Overwrite antd Styles !!!!! */
 a:hover,
 a:active {
-  color: #2FA4FF;
+  color: white !important;
 }
 .ant-pagination-item-active {
   background-color: #15B1FF;
@@ -120,4 +158,10 @@ to {transform: rotate(360deg)}
 .center {
   display: block;
   margin: 0 auto;
+}
+
+.divMiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }

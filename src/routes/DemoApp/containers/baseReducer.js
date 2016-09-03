@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
+import getUser from 'SRC/utils/getUser.js'
 const initialState = Immutable.fromJS({
-  isShowLogin: false,
+  isShowLogin: getUser().name === '',
   isLogining: false,
   msg: '',
   error: false,
@@ -17,7 +18,6 @@ const reducerMap = {
     return state.set('isLogining', Immutable.fromJS(false))
                 .set('success', Immutable.fromJS(action.result.success || false))
                 .set('error', Immutable.fromJS(action.result.error || false))
-                .set('isShowLogin', Immutable.fromJS(false))
                 .set('msg', Immutable.fromJS(action.value.msg || ''))
   },
   'BASE@LOGIN_WAITING': (state, action) => {
@@ -27,10 +27,12 @@ const reducerMap = {
   },
   'BASE@LOGOUT': (state, action) => {
     return state.set('success', Immutable.fromJS(true))
+                .set('home', Immutable.fromJS(true))
   },
   'BASE@CLEAR_MODAL': (state, action) => {
     return state.set('success', Immutable.fromJS(false))
                 .set('error', Immutable.fromJS(false))
+                .set('msg', Immutable.fromJS(''))
   },
   'BASE@GO_TO_ASK': (state, action) => {
     return state.set('home', Immutable.fromJS(false))

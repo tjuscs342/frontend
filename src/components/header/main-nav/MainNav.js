@@ -30,11 +30,32 @@ class MainNav extends Component {
     }
   }
   success() {
-    Modal.success({
-      width: '90%',
-      title: getUser().name !== '' ? '登陆成功' : '您已登出'
-    })
-    this.props.clearModal()
+    const name = getUser().name
+    if (name !== '') {
+      this.props.setVisible()
+      Modal.success({
+        width: '90%',
+        title: '登陆成功',
+        onOk: () => {
+          this.context.router.push({
+            pathname: '/ask'
+          })
+        }
+      })
+      this.props.clearModal()
+    } else {
+      Modal.success({
+        width: '90%',
+        title: '您已登出',
+        onOk: () => {
+          this.props.clearModal()
+          this.props.setVisible()
+          this.context.router.push({
+            pathname: '/'
+          })
+        }
+      })
+    }
   }
 
   error() {
@@ -59,7 +80,7 @@ class MainNav extends Component {
     return (
       <_row style={this.props.style} styleName="main-nav" type="flex" align="bottom">
         <_col span={6} styleName="main-nav-header">
-          <div styleName="logo" className="divCenterMiddle">
+          <div styleName="logo" className="divCenterMiddle ourColor">
             Logo
           </div>
 
@@ -86,7 +107,7 @@ class MainNav extends Component {
           <div className="divCenterMiddle">
             {
               userName === '' ?
-                <Icon type="user" className="center" onClick={setVisible} />
+                <Icon type="user" className="center ourColor" onClick={setVisible} />
               :
                 <div style={{ textAlign: 'center' }}>
                   <span>{userName}</span>
@@ -94,45 +115,45 @@ class MainNav extends Component {
                     style={{ display: 'inline-block', marginLeft: '0.5rem' }}
                     onClick={logout}
                     >
-                    <Icon type="logout" />
+                    <Icon type="logout" className="ourColor" />
                   </span>
                 </div>
             }
           </div>
         </_col>
         <Modal
-          title="Login"
+          title={<div className="ourColor">登录</div>}
           width="90%"
           visible={isShowLogin}
           onOk={setVisible}
-          onCancel={setVisible}
+          closable={false}
           footer={[
-            <Button key="back" type="ghost" size="large" onClick={setVisible}>
-              cancel
-            </Button>,
             <Button
               key="submit"
               type="primary"
               size="large"
               loading={isLogining}
-              onClick={() =>
-                login(document.getElementById('userName').value, document.getElementById('password').value)
-              }
+              onClick={() => {
+                // eslint-disable-next-line
+                const userName = document.getElementById('userName').value
+                const password = document.getElementById('password').value
+                return userName !== '' && password !== '' ? login(userName, password) : ''
+              }}
               >
-              login
+              登录
             </Button>
           ]}
           >
           <div>
             <Input
               className="modal"
-              addonBefore="username:"
+              addonBefore="账号:"
               id="userName"
               style={{ width: '100%' }}
               />
             <br />
             <Input
-              addonBefore="password:"
+              addonBefore="口令:"
               id="password"
               type="password"
               style={{ width: '100%' }}
@@ -162,7 +183,9 @@ MainNav.propTypes = {
   logout: React.PropTypes.func,
   clearModal: React.PropTypes.func
 }
-
+MainNav.contextTypes = {
+  router: React.PropTypes.object
+}
 MainNav.defaultProps = {
   menuItems: [],
   selectedKeys: [],

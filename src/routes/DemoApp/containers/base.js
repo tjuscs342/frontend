@@ -5,15 +5,20 @@ import { bindActionCreators } from 'redux'
 import CSSModules from 'react-css-modules'
 import styles from './base.css'
 import * as BaseAction from './baseAction'
-
+import { Link } from 'react-router'
+import getUser from 'SRC/utils/getUser'
 
 const menuItems = [
-  { key: 'ask', name: '请假申请', link: '/ask' },
-  { key: 'page2', name: 'page2', link: '/page2' },
-  { key: 'page3', name: 'page3', link: '/page3' },
-  { key: 'page4', name: 'page4', link: '/page4' }
+  {
+    key: 'ask',
+    name: '本人请假申请',
+    link: '/ask'
+  }, {
+    key: 'page2',
+    name: '下属请假批准',
+    link: '/page2'
+  }
 ]
-
 class Base extends Component {
   constructor(props) {
     super(props)
@@ -23,14 +28,6 @@ class Base extends Component {
     this.clearModal = this.clearModal.bind(this)
     this.goToAsk = this.goToAsk.bind(this)
   }
-  componentDidMount() {
-    if (this.props.state.home) {
-      this.goToAsk()
-      this.context.router.push({
-        pathname: '/ask'
-      })
-    }
-  }
   setVisible() {
     this.props.actions.setVisible()
   }
@@ -38,11 +35,7 @@ class Base extends Component {
     this.props.actions.goToAsk()
   }
   login(userName, password) {
-    if (userName.length !== 0 && password.length !== 0) {
-      this.props.actions.login(userName, password)
-    } else {
-      this.props.actions.setVisible()
-    }
+    this.props.actions.login(userName, password)
   }
   logout() {
     this.props.actions.logout()
@@ -51,16 +44,14 @@ class Base extends Component {
     this.props.actions.clearModal()
   }
   render() {
-    const mainMenu = this.props.location.pathname.split('/')[1] || 'ask'
-    const height = this.props.params.reportType === 'diamond' ? 0 : 5.3
+    const mainMenu = this.props.location.pathname.split('/')[1] || ''
     const isShowLogin = this.props.state.isShowLogin
     const isLogining = this.props.state.isLogining
     const msg = this.props.state.msg
     const success = this.props.state.success
     const error = this.props.state.error
-    const footer = 2
     return (
-      <div className="container" style={{ height: `${window.innerHeight}px` }}>
+      <div className="" style={{ height: `${window.innerHeight}px` }}>
         <div
           className="header"
           >
@@ -78,16 +69,26 @@ class Base extends Component {
             msg={msg}
             />
         </div>
+        <div className="fix-top-row">
+          <ul styleName="menu" className="divMiddle">
+          {
+            menuItems.map(menuItem => (
+              <li key={menuItem.key} styleName={mainMenu === menuItem.key ? 'menu-item-selected' : 'menu-item'}>
+                <Link to={menuItem.link}>{menuItem.name}</Link>
+              </li>
+            ))
+          }
+          </ul>
+        </div>
 
         <div className="body">
           {
-            // this.props.children
+            this.props.children
           }
-          abckd
         </div>
-        <span className="footer">
-          Powered by <a href="https://github.com/AllanJian" target="_blank">AllanJian</a>.
-        </span>
+        <div className="footer">
+          <div className="divCenterMiddle">Powered by <a href="https://github.com/tjuscs342" target="_blank">tjuscs342</a>.</div>
+        </div>
       </div>
     )
   }

@@ -1,16 +1,16 @@
 /* vim: set filetype=javascript.jsx */
 import React, { PropTypes, Component } from 'react'
 import CSSModules from 'react-css-modules'
-import styles from './Page3.css'
+import styles from './details.css'
 
-class Page3 extends Component {
+class details extends Component {
   render() {
     return (
       <div>
-        page3
+        假期详细
       </div>
     )
   }
 }
 
-export default CSSModules(Page3, styles)
+export default CSSModules(details, styles)
