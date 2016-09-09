@@ -16,7 +16,6 @@ export default (store) => (
     childRoutes: [
       require('./routes/ask/routes.js').default(store),
       require('./routes/page2/routes.js').default(store),
-      require('./routes/details/routes.js').default(store),
-      require('./routes/page4/routes.js').default(store)
+      require('./routes/details/routes.js').default(store)
     ]
   })

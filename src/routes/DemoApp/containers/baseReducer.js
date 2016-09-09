@@ -6,7 +6,8 @@ const initialState = Immutable.fromJS({
   msg: '',
   error: false,
   success: false,
-  home: location.href.split('/').length < 6
+  home: location.href.split('/').length < 6,
+  isMenuShow: false
 })
 
 /* eslint-disable no-unused-vars, arrow-body-style */
@@ -36,6 +37,9 @@ const reducerMap = {
   },
   'BASE@GO_TO_ASK': (state, action) => {
     return state.set('home', Immutable.fromJS(false))
+  },
+  'BASE@SET_MENU_SHOW': (state, action) => {
+    return state.set('isMenuShow', Immutable.fromJS(!state.toJS().isMenuShow))
   }
 }
 

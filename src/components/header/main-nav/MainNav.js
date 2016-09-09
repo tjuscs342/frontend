@@ -80,8 +80,12 @@ class MainNav extends Component {
     return (
       <_row style={this.props.style} styleName="main-nav" type="flex" align="bottom">
         <_col span={6} styleName="main-nav-header">
-          <div styleName="logo" className="divCenterMiddle ourColor">
-            Logo
+          <div
+            styleName="logo"
+            className="divCenterMiddle ourColor"
+            onClick={this.props.setMenuShow}
+            >
+            <img src={require('SRC/assets/imgs/logo.jpg')} alt="logo" />
           </div>
 
         </_col>
@@ -181,7 +185,8 @@ MainNav.propTypes = {
   success: React.PropTypes.bool,
   error: React.PropTypes.bool,
   logout: React.PropTypes.func,
-  clearModal: React.PropTypes.func
+  clearModal: React.PropTypes.func,
+  setMenuShow: React.PropTypes.func
 }
 MainNav.contextTypes = {
   router: React.PropTypes.object
