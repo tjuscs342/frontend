@@ -1,8 +1,12 @@
 import demo from './demo.js'
 import base from './base.js'
+import ask from './ask.js'
+import me from './me.js'
 const apiMap = {
   demo,
-  base
+  base,
+  ask,
+  me
 }
 
 const api = (path, ...args) => {

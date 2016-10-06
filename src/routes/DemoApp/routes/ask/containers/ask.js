@@ -2,27 +2,48 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './ask.css'
-import { Select, Radio, Checkbox, Button, DatePicker, TimePicker, InputNumber, Form, Cascader, Icon, Input } from 'antd'
+import { Select, Button, DatePicker, Form, Icon, Input } from 'antd'
 const Option = Select.Option
+const Modal = require('antd/lib/modal')
 import { Link } from 'react-router'
-const RadioGroup = Radio.Group
 const FormItem = Form.Item
-
+import * as askActions from './askAction.js'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 class Ask extends Component {
   constructor(props) {
     super(props)
     this.handleReset = this.handleReset.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.checkBegin = this.checkBegin.bind(this)
-    this.checkPrime = this.checkPrime.bind(this)
+    this.showModal = this.showModal.bind(this)
   }
 
-  componentDidMount() {
-    this.props.form.setFieldsValue({
-      eat: true,
-      sleep: true,
-      beat: true
-    })
+  componentDidUpdate() {
+    if (this.props.state.isShowingModal) {
+      this.showModal()
+    }
+  }
+  showModal() {
+    console.log('modal', this.props.state.msg)
+    if (this.props.state.msg === 'success') {
+      Modal.success({
+        width: '90%',
+        title: '提交成功',
+        onOk: () => {
+          this.props.actions.hiddenModal()
+        }
+      })
+    } else {
+      Modal.error({
+        title: '错误',
+        width: '90%',
+        content:
+          <div>
+            <p>{this.props.state.msg}</p>
+          </div>
+      })
+    }
   }
   handleReset(e) {
     e.preventDefault()
@@ -38,25 +59,24 @@ class Ask extends Component {
       }
       console.log('Submit!!!')
       console.log(values)
+      this.props.actions.submit(values)
     })
   }
 
   checkBegin(rule, value, callback) {
-    if (value && value.getTime() < Date.now()) {
+    if (value && value.getTime() + 86400 * 24 < Date.now()) {
       callback(new Error('这天已经过去了!'))
     } else {
       callback()
     }
   }
-
-  checkPrime(rule, value, callback) {
-    if (value !== 11) {
-      callback(new Error('8~12之间的质数明明是11啊!'))
+  checkEnd(rule, value, callback) {
+    if (value && value.getTime() + 86400 * 24 < Date.now()) {
+      callback(new Error('这天已经过去了!'))
     } else {
       callback()
     }
   }
-
   render() {
     const { getFieldProps } = this.props.form
     const vacationTypeProps = getFieldProps('vacationType', {
@@ -67,6 +87,11 @@ class Ask extends Component {
     const reasonProps = getFieldProps('vacationReason', {
       rules: [
         { required: true, message: '请描述请假原因' }
+      ]
+    })
+    const handoverProps = getFieldProps('vacationHandover', {
+      rules: [
+        { required: false, message: '如有交接人请填写' }
       ]
     })
     const vacationBeginProps = getFieldProps('vacationBegin', {
@@ -86,6 +111,8 @@ class Ask extends Component {
           required: true,
           type: 'date',
           message: '请假的结束时间'
+        }, {
+          validator: this.checkEnd
         }
       ]
     })
@@ -104,13 +131,12 @@ class Ask extends Component {
         <div className="container">
           <FormItem
             {...formItemLayout}
-            label="直接主管"
-            >
-            接口传的某人
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="请假类型"
+            label={
+              <span>
+                请假类型
+                <Link to="/details"><Icon type="question-circle-o" className="ourColor" /></Link>
+              </span>
+            }
             >
             <Select {...vacationTypeProps} placeholder="请选择假期类型" style={{ width: '85%' }}>
               <Option value="year">带薪年假</Option>
@@ -124,14 +150,6 @@ class Ask extends Component {
               <Option value="feed">哺乳假</Option>
               <Option value="workInjury">工伤假</Option>
             </Select>
-          </FormItem>
-          <FormItem
-            wrapperCol={{ span: 12, offset: 7 }}
-            style={{ marginTop: '-1rem', marginBottom: '0rem' }}
-            >
-            <Link to="/details">
-              <span className="ourColor">查看假期类型 </span> <Icon type="circle-o-right" />
-            </Link>
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -149,6 +167,7 @@ class Ask extends Component {
             label="工作交接人"
             >
             <Input
+              {...handoverProps}
               style={{ width: '85%' }}
               />
           </FormItem>
@@ -165,9 +184,15 @@ class Ask extends Component {
             <DatePicker {...vacationEndProps} />
           </FormItem>
           <FormItem
+            {...formItemLayout}
+            label="直接主管"
+            >
+            接口传的某人
+          </FormItem>
+          <FormItem
             wrapperCol={{ span: 12, offset: 7 }}
             >
-            <Button type="primary" onClick={this.handleSubmit}>确定</Button>
+            <Button type="primary" onClick={this.handleSubmit} loading={this.props.state.isSubmitLoading} >确定</Button>
             <Button type="ghost" style={{ marginLeft: '1rem' }} onClick={this.handleReset}>重置</Button>
           </FormItem>
         </div>
@@ -176,9 +201,22 @@ class Ask extends Component {
   }
 }
 Ask.propTypes = {
-  form: React.PropTypes.object
+  form: React.PropTypes.object,
+  state: React.PropTypes.object,
+  actions: React.PropTypes.object
 }
 // eslint-disable-next-line
 Ask = Form.create({})(Ask)
 
-export default CSSModules(Ask, styles)
+function mapState(state) {
+  return {
+    state: state.ask.toJS()
+  }
+}
+function mapDispatch(dispatch) {
+  return {
+    actions: bindActionCreators(askActions, dispatch)
+  }
+}
+
+export default connect(mapState, mapDispatch)(CSSModules(Ask, styles))

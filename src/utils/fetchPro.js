@@ -42,14 +42,14 @@ const defaultConfig = {
 
 */
 
-export const fetchPro = (url, config = {}) => {
+export const fetchPro = (url, config = { method: 'GET' }) => {
   /*
     调试模式
     如果url在mockAPIConfig注册过, 并且enabled, 则跳过fetch请求, 直接返回promise结果
    */
   if (mockAPIConfig.enabled) {
     for (const rule of mockAPIConfig.rules) {
-      if (rule.enabled && rule.url.test(url)) {
+      if (rule.enabled && rule.url.test(url) && config.method === rule.method) {
         return new Promise((resolve, reject) => { // eslint-disable-line no-loop-func
           logger.warn(`${url} has been redirected to customized results`)
           let delay = parseInt(rule.delay) || 100

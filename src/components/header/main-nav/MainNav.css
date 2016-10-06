@@ -62,13 +62,11 @@
   overflow: hidden;
   text-align: center;
 }
-.logo img,
-.logo span {
+.logo img {
   display: block;
   margin: 0 auto;
   vertical-align: middle;
   color: #858585 !important;
-  margin-top: 0.5rem;
   width: 4rem;
   border-radius: 2rem;
   border: 1px solid white;

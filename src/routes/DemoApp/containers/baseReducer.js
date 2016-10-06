@@ -7,7 +7,8 @@ const initialState = Immutable.fromJS({
   error: false,
   success: false,
   home: location.href.split('/').length < 6,
-  isMenuShow: false
+  isMenuShow: false,
+  userName: getUser().name
 })
 
 /* eslint-disable no-unused-vars, arrow-body-style */
@@ -20,6 +21,7 @@ const reducerMap = {
                 .set('success', Immutable.fromJS(action.result.success || false))
                 .set('error', Immutable.fromJS(action.result.error || false))
                 .set('msg', Immutable.fromJS(action.value.msg || ''))
+                .set('userName', Immutable.fromJS(action.value.data.userName || ''))
   },
   'BASE@LOGIN_WAITING': (state, action) => {
     return state.set('isLogining', Immutable.fromJS(true))
@@ -29,6 +31,7 @@ const reducerMap = {
   'BASE@LOGOUT': (state, action) => {
     return state.set('success', Immutable.fromJS(true))
                 .set('home', Immutable.fromJS(true))
+                .set('userName', Immutable.fromJS(''))
   },
   'BASE@CLEAR_MODAL': (state, action) => {
     return state.set('success', Immutable.fromJS(false))
@@ -39,7 +42,7 @@ const reducerMap = {
     return state.set('home', Immutable.fromJS(false))
   },
   'BASE@SET_MENU_SHOW': (state, action) => {
-    return state.set('isMenuShow', Immutable.fromJS(!state.toJS().isMenuShow))
+    return state.set('isMenuShow', Immutable.fromJS(action.value))
   }
 }
 

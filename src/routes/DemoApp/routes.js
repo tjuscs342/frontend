@@ -11,11 +11,13 @@ export default (store) => (
         const reducer = require('./containers/baseReducer').default
         injectReducer(store, { key: 'base', reducer })
         cb(null, require('./containers/base').default)
-      }, 'main')
+      }, 'base')
     },
     childRoutes: [
       require('./routes/ask/routes.js').default(store),
       require('./routes/page2/routes.js').default(store),
-      require('./routes/details/routes.js').default(store)
+      require('./routes/details/routes.js').default(store),
+      require('./routes/me/routes.js').default(store),
+      require('./routes/history/routes.js').default(store)
     ]
   })

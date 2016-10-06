@@ -6,19 +6,8 @@ import { bindActionCreators } from 'redux'
 import CSSModules from 'react-css-modules'
 import styles from './base.css'
 import * as BaseAction from './baseAction'
-import { Link } from 'react-router'
 import classnames from 'classnames'
-const menuItems = [
-  {
-    key: 'ask',
-    name: '本人请假申请',
-    link: '/ask'
-  }, {
-    key: 'page2',
-    name: '下属请假批准',
-    link: '/page2'
-  }
-]
+
 class Base extends Component {
   constructor(props) {
     super(props)
@@ -28,10 +17,16 @@ class Base extends Component {
     this.clearModal = this.clearModal.bind(this)
     this.goToAsk = this.goToAsk.bind(this)
     this.setMenuShow = this.setMenuShow.bind(this)
+    this.getChildContext()
   }
   getInitialState() {
     return {
       current: '1'
+    }
+  }
+  getChildContext() {
+    return {
+      userName: this.props.state.userName
     }
   }
   // 登陆框显示/隐藏
@@ -39,8 +34,8 @@ class Base extends Component {
     this.props.actions.setVisible()
   }
   // 左边菜单显示/隐藏
-  setMenuShow() {
-    this.props.actions.setMenuShow()
+  setMenuShow(value) {
+    this.props.actions.setMenuShow(value)
   }
   // 首页跳转到请假页面
   goToAsk() {
@@ -67,7 +62,7 @@ class Base extends Component {
     const error = this.props.state.error
 
     return (
-      <div className="" style={{ height: `${window.innerHeight}px`, overflow: 'hidden' }}>
+      <div style={{ height: `${window.innerHeight}px`, overflow: 'hidden' }}>
         <div
           style={{
             display: 'inline-flex',
@@ -84,6 +79,8 @@ class Base extends Component {
           <div style={{ width: `${window.innerWidth * 0.7}px`, height: '100%', display: 'inline-block', backgroundColor: '#666' }}>
             <LeftMenu
               config=""
+              logout={this.logout}
+              setMenuShow={this.setMenuShow}
               />
           </div>
           <div style={{ display: 'inline-block', width: `${window.innerWidth}px`, height: '100%' }}>
@@ -92,7 +89,6 @@ class Base extends Component {
               >
               <MainNav
                 selectedKeys={[mainMenu]}
-                menuItems={menuItems}
                 setVisible={this.setVisible}
                 isShowLogin={isShowLogin}
                 isLogining={isLogining}
@@ -103,21 +99,10 @@ class Base extends Component {
                 error={error}
                 msg={msg}
                 setMenuShow={this.setMenuShow}
+                userName={this.props.state.userName}
                 />
             </div>
-            <div className="fix-top-row">
-              <ul styleName="menu" className="divMiddle">
-              {
-                menuItems.map(menuItem => (
-                  <li key={menuItem.key} styleName={mainMenu === menuItem.key ? 'menu-item-selected' : 'menu-item'}>
-                    <Link to={menuItem.link}>{menuItem.name}</Link>
-                  </li>
-                ))
-              }
-              </ul>
-            </div>
-
-            <div className="body">
+            <div className="body" onClick={() => this.setMenuShow(false)}>
               {
                 this.props.children
               }
@@ -144,9 +129,11 @@ Base.propTypes = {
   actions: React.PropTypes.object,
   state: React.PropTypes.object
 }
-
 Base.contextTypes = {
   router: React.PropTypes.object
+}
+Base.childContextTypes = {
+  userName: React.PropTypes.string
 }
 
 function mapState(state) {

@@ -18,7 +18,7 @@ function loginWaiting() {
 function loginDone(value) {
   const result = {
     error: value.status === 'fail',
-    success: value.status === 'succ'
+    success: value.status === 'success'
   }
   if (result.success) {
     setUser(value.data.userName, 2)
@@ -36,9 +36,10 @@ export function goToAsk() {
   }
 }
 // 菜单显示/隐藏
-export function setMenuShow() {
+export function setMenuShow(value) {
   return {
-    type: 'BASE@SET_MENU_SHOW'
+    type: 'BASE@SET_MENU_SHOW',
+    value
   }
 }
 // 清空对话框状态
@@ -69,8 +70,9 @@ export function login(userName, password) {
         logger.error(e)
         return { status: 'fail', result: -1 }
       })
-      .then(json => (
-        dispatch(loginDone(json))
-      ))
+      .then(json => {
+        console.log(json)
+        return dispatch(loginDone(json))
+      })
   }
 }

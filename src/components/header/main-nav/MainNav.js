@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
-
 import getUser from 'SRC/utils/getUser'
 
 import CSSModules from 'react-css-modules'
@@ -8,12 +6,10 @@ import styles from './MainNav.css'
 
 const _row = require('antd/lib/row')
 const _col = require('antd/lib/col')
-const _menu = require('antd/lib/menu')
 const Modal = require('antd/lib/modal')
 const Button = require('antd/lib/button')
 const Input = require('antd/lib/input')
 const Icon = require('antd/lib/icon')
-const MenuItem = _menu.Item
 
 class MainNav extends Component {
   constructor(props) {
@@ -73,17 +69,15 @@ class MainNav extends Component {
     const setVisible = this.props.setVisible
     const isShowLogin = this.props.isShowLogin
     const isLogining = this.props.isLogining
-    const activeItem = this.props.selectedKeys[0]
     const login = this.props.login
-    const logout = this.props.logout
-    const userName = getUser().name
+    const userName = this.props.userName
     return (
       <_row style={this.props.style} styleName="main-nav" type="flex" align="bottom">
         <_col span={6} styleName="main-nav-header">
           <div
             styleName="logo"
             className="divCenterMiddle ourColor"
-            onClick={this.props.setMenuShow}
+            onClick={() => this.props.setMenuShow(true)}
             >
             <img src={require('SRC/assets/imgs/logo.jpg')} alt="logo" />
           </div>
@@ -91,7 +85,7 @@ class MainNav extends Component {
         </_col>
         <_col span={12} styleName="main-nav-header">
           <div styleName="productName" className="divLeftMiddle">
-            请假系统
+
           </div>
         </_col>
         {
@@ -115,12 +109,6 @@ class MainNav extends Component {
               :
                 <div style={{ textAlign: 'center' }}>
                   <span>{userName}</span>
-                  <span
-                    style={{ display: 'inline-block', marginLeft: '0.5rem' }}
-                    onClick={logout}
-                    >
-                    <Icon type="logout" className="ourColor" />
-                  </span>
                 </div>
             }
           </div>
@@ -170,11 +158,6 @@ class MainNav extends Component {
 }
 
 MainNav.propTypes = {
-  menuItems: React.PropTypes.arrayOf(React.PropTypes.shape({
-    key: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string.isRequired,
-    link: React.PropTypes.string.isRequired
-  })),
   selectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
   style: React.PropTypes.object,
   setVisible: React.PropTypes.func,
@@ -186,7 +169,8 @@ MainNav.propTypes = {
   error: React.PropTypes.bool,
   logout: React.PropTypes.func,
   clearModal: React.PropTypes.func,
-  setMenuShow: React.PropTypes.func
+  setMenuShow: React.PropTypes.func,
+  userName: React.PropTypes.string
 }
 MainNav.contextTypes = {
   router: React.PropTypes.object
