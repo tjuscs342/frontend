@@ -14,7 +14,7 @@ export const mockAPIConfig = {
   rules: [
     {
       // 模拟登录
-      enabled: true,
+      enabled: false,
       method: 'POST',
       url: new RegExp("/login"),
       type: 'normal',

@@ -1,6 +1,6 @@
 import fetchPro from 'SRC/utils/fetchPro'
 import api from 'SRC/api'
-import { setUser } from 'SRC/utils/getUser'
+import getUser, { setUser } from 'SRC/utils/getUser'
 import logger from 'SRC/utils/logger'
 // 登陆框是否可见
 export function setVisible() {
@@ -15,13 +15,14 @@ function loginWaiting() {
   }
 }
 // 登陆结果返回后
-function loginDone(value) {
+function loginDone(value, userName) {
   const result = {
     error: value.status === 'fail',
-    success: value.status === 'success'
+    success: value.status === 'success',
+    userName
   }
   if (result.success) {
-    setUser(value.data.userName, 2)
+    setUser(userName, 2)
   }
   return {
     type: 'BASE@LOGIN_DONE',
@@ -72,7 +73,7 @@ export function login(userName, password) {
       })
       .then(json => {
         console.log(json)
-        return dispatch(loginDone(json))
+        return dispatch(loginDone(json, userName))
       })
   }
 }

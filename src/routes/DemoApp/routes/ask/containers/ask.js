@@ -139,7 +139,7 @@ class Ask extends Component {
             }
             >
             <Select {...vacationTypeProps} placeholder="请选择假期类型" style={{ width: '85%' }}>
-              <Option value="year">带薪年假</Option>
+              <Option value="1">带薪年假</Option>
               <Option value="sick">病假</Option>
               <Option value="personal">事假</Option>
               <Option value="marry">婚假</Option>
