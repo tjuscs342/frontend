@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux'
 import { Row, Col } from 'antd'
 
 class me extends Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.actions.loadUserInfo()
   }
   render() {

@@ -41,44 +41,43 @@ const defaultConfig = {
   fetchPro(url, { timeout: 1000 })
 
 */
-
-export const fetchPro = (url, config = { method: 'GET' }) => {
+export const fetchPro = (url, config = {}) => {
   /*
     调试模式
     如果url在mockAPIConfig注册过, 并且enabled, 则跳过fetch请求, 直接返回promise结果
    */
   if (mockAPIConfig.enabled) {
-    for (const rule of mockAPIConfig.rules) {
-      if (rule.enabled && rule.url.test(url) && config.method === rule.method) {
-        return new Promise((resolve, reject) => { // eslint-disable-line no-loop-func
-          logger.warn(`${url} has been redirected to customized results`)
-          let delay = parseInt(rule.delay) || 100
-          if (typeof rule.delay === 'function') {
-            delay = rule.delay(url, config)
-          }
-          setTimeout(() => {
-            if (rule.type === 'error') {
-              let error
-              if (typeof rule.error === 'function') {
-                error = rule.error(url, config)
-              } else {
-                error = rule.error || 'unknown error'
-              }
-              reject(new Error(error))
-            } else {
-              resolve({
-                json: () => {
-                  if (typeof rule.response === 'function') {
-                    return rule.response(url, config)
-                  }
-                  return rule.response || {}
-                }
-              })
-            }
-          }, delay || 100)
-        })
-      }
-    }
+   for (const rule of mockAPIConfig.rules) {
+     if (rule.enabled && rule.url.test(url)) {
+       return new Promise((resolve, reject) => { // eslint-disable-line no-loop-func
+         logger.warn(`${url} has been redirected to customized results`)
+         let delay = parseInt(rule.delay) || 100
+         if (typeof rule.delay === 'function') {
+           delay = rule.delay(url, config)
+         }
+         setTimeout(() => {
+           if (rule.type === 'error') {
+             let error
+             if (typeof rule.error === 'function') {
+               error = rule.error(url, config)
+             } else {
+               error = rule.error || 'unknown error'
+             }
+             reject(new Error(error))
+           } else {
+             resolve({
+               json: () => {
+                 if (typeof rule.response === 'function') {
+                   return rule.response(url, config)
+                 }
+                 return rule.response || {}
+               }
+             })
+           }
+         }, delay || 100)
+       })
+     }
+   }
   }
   /*
    * 正常模式

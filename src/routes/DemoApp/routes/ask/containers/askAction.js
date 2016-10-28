@@ -10,23 +10,23 @@ export function hiddenModal() {
 
 export function submit(value) {
   return (dispatch) => {
-    dispatch({
-      type: 'ASK@SUBMIT_LOADING'
-    })
+    // dispatch({
+    //   type: 'ASK@SUBMIT_LOADING'
+    // })
     const formData = new FormData()
-    formData.append('type', value.vacationType)
-    formData.append('reason', value.vacationReason)
-    formData.append('handover', value.vacationHandover)
-    formData.append('vacationBegin', value.vacationBegin)
-    formData.append('vacationEnd', value.vacationEnd)
+    formData.append('type', value.type)
+    formData.append('reason', value.reason)
+    formData.append('handOver', value.handOver)
+    formData.append('start', value.start)
+    formData.append('end', value.end)
 
     return fetchPro(api('ask:apply'), {
       method: 'POST',
+      credentials: 'include',
       body: formData
     }).then(response => response.json())
       .catch((e) => {
         logger.error(e)
-        return { status: 'fail', result: -1 }
       })
       .then(json => {
         console.log('json', json)

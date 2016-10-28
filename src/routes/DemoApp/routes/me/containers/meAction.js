@@ -4,13 +4,15 @@ import logger from 'SRC/utils/logger'
 
 export function loadUserInfo() {
   return (dispatch) => (
-    fetchPro(api('me:getUserInfo'))
+    fetchPro(api('me:getUserInfo'), {
+      credentials: 'include'
+    })
       .then(response => response.json())
       .catch((e) => {
         logger.error(e)
-        return { status: 'fail', result: -1 }
       })
       .then(json => {
+        console.log('json', json)
         dispatch({
           type: 'ME@LOAD_USER_INFO',
           value: json

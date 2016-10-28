@@ -1,7 +1,7 @@
 {
-  "name": "o2o-fe",
+  "name": "classDesign",
   "version": "0.0.1",
-  "description": "the o2o project",
+  "description": "class design for school",
   "scripts": {
     "clean": "rimraf dist",
     "copy-static": "rm -rf ./remote-dist/static && rm ./remote-dist/index.html && cp -r ./dist/* ./remote-dist",

@@ -69,7 +69,6 @@ export function login(userName, password) {
     }).then(response => response.json())
       .catch((e) => {
         logger.error(e)
-        return { status: 'fail', result: -1 }
       })
       .then(json => {
         console.log(json)

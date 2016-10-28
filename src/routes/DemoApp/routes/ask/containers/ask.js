@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules'
 import styles from './ask.css'
 import { Select, Button, DatePicker, Form, Icon, Input } from 'antd'
 const Option = Select.Option
+import moment from 'moment'
 const Modal = require('antd/lib/modal')
 import { Link } from 'react-router'
 const FormItem = Form.Item
@@ -16,12 +17,11 @@ class Ask extends Component {
     this.handleReset = this.handleReset.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.checkBegin = this.checkBegin.bind(this)
+    this.checkEnd = this.checkEnd.bind(this)
     this.showModal = this.showModal.bind(this)
-  }
-
-  componentDidUpdate() {
-    if (this.props.state.isShowingModal) {
-      this.showModal()
+    this.state = {
+      start: moment().format(),
+      end: moment().format()
     }
   }
   showModal() {
@@ -49,7 +49,6 @@ class Ask extends Component {
     e.preventDefault()
     this.props.form.resetFields()
   }
-
   handleSubmit(e) {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((errors, values) => {
@@ -58,43 +57,60 @@ class Ask extends Component {
         return
       }
       console.log('Submit!!!')
-      console.log(values)
+      values.start = this.state.start
+      values.end = this.state.end
+      console.log('submit', values)
       this.props.actions.submit(values)
     })
   }
-
+  componentDidUpdate(prevProps) {
+    if (!prevProps.state.isShowingModal && this.props.state.isShowingModal) {
+      this.showModal()
+    }
+  }
   checkBegin(rule, value, callback) {
-    if (value && value.getTime() + 86400 * 24 < Date.now()) {
+    if (value && value.getTime() + 86400000 < Date.now()) {
       callback(new Error('这天已经过去了!'))
     } else {
+      if (value) {
+        this.setState({
+          start: moment(value.getTime()).format('YYYY-MM-DD')
+        })
+      }
       callback()
     }
   }
   checkEnd(rule, value, callback) {
-    if (value && value.getTime() + 86400 * 24 < Date.now()) {
+    if (value && value.getTime() + 86400000 < Date.now()) {
       callback(new Error('这天已经过去了!'))
     } else {
+      console.log('value', value)
+      if (value) {
+        this.setState({
+          end: moment(value.getTime()).format('YYYY-MM-DD')
+        })
+      }
       callback()
     }
   }
   render() {
     const { getFieldProps } = this.props.form
-    const vacationTypeProps = getFieldProps('vacationType', {
+    const vacationTypeProps = getFieldProps('type', {
       rules: [
         { required: true, message: '请选择您的假期类型' }
       ]
     })
-    const reasonProps = getFieldProps('vacationReason', {
+    const reasonProps = getFieldProps('reason', {
       rules: [
         { required: true, message: '请描述请假原因' }
       ]
     })
-    const handoverProps = getFieldProps('vacationHandover', {
+    const handoverProps = getFieldProps('handOver', {
       rules: [
         { required: false, message: '如有交接人请填写' }
       ]
     })
-    const vacationBeginProps = getFieldProps('vacationBegin', {
+    const vacationBeginProps = getFieldProps('start', {
       rules: [
         {
           required: true,
@@ -105,7 +121,10 @@ class Ask extends Component {
         }
       ]
     })
-    const vacationEndProps = getFieldProps('vacationEnd', {
+    // if (vacationBeginProps.value === undefined) {
+    //   vacationBeginProps.onChange(this.state.start)
+    // }
+    const vacationEndProps = getFieldProps('end', {
       rules: [
         {
           required: true,
@@ -113,6 +132,17 @@ class Ask extends Component {
           message: '请假的结束时间'
         }, {
           validator: this.checkEnd
+        }
+      ]
+    })
+    // if (vacationEndProps.value === undefined) {
+    //   vacationEndProps.onChange(this.state.end)
+    // }
+    const leaderProps = getFieldProps('leader', {
+      rules: [
+        {
+          required: false,
+          message: '必填'
         }
       ]
     })
@@ -140,7 +170,7 @@ class Ask extends Component {
             >
             <Select {...vacationTypeProps} placeholder="请选择假期类型" style={{ width: '85%' }}>
               <Option value="1">带薪年假</Option>
-              <Option value="sick">病假</Option>
+              <Option value="2">病假</Option>
               <Option value="personal">事假</Option>
               <Option value="marry">婚假</Option>
               <Option value="diedWay">丧假路途假</Option>
@@ -175,7 +205,7 @@ class Ask extends Component {
             {...formItemLayout}
             label="开始时间"
             >
-            <DatePicker {...vacationBeginProps} />
+            <DatePicker {...vacationBeginProps}  />
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -187,7 +217,12 @@ class Ask extends Component {
             {...formItemLayout}
             label="直接主管"
             >
-            接口传的某人
+            <Input
+              {...leaderProps}
+              disabled
+              value="xxxx"
+              style={{ width: '85%' }}
+              />
           </FormItem>
           <FormItem
             wrapperCol={{ span: 12, offset: 7 }}
