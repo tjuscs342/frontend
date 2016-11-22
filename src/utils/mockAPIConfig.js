@@ -10,7 +10,7 @@ import { FETCH_TIMEOUT } from 'SRC/utils/fetchPro' // eslint-disable-line no-unu
 
 /* eslint-disable quote-props, quotes */
 export const mockAPIConfig = {
-  enabled: false,
+  enabled: true,
   rules: [
     {
       // 模拟登录
@@ -55,7 +55,7 @@ export const mockAPIConfig = {
       type: 'normal',
       delay: 1300,
       // eslint-disable-next-line
-      response: {"status":"success","data":[{"userId":117,"applicationId":7,"applyDate":"2016-10-06 00:00:00","auditDate":null,"startDate":"2016-08-11 00:00:00","endDate":"2016-08-12 00:00:00","reason":"aaaaa","applyType":1,"result":1,"operatorId":null,"operatorName":null,"remark":null},{"userId":117,"applicationId":8,"applyDate":"2016-10-06 00:00:00","auditDate":null,"startDate":"2016-08-11 00:00:00","endDate":"2016-08-12 00:00:00","reason":"aaaaa","applyType":1,"result":1,"operatorId":null,"operatorName":null,"remark":null},{"userId":117,"applicationId":9,"applyDate":"2016-10-06 00:00:00","auditDate":null,"startDate":"2016-08-11 00:00:00","endDate":"2016-08-12 00:00:00","reason":"aaaaa","applyType":1,"result":1,"operatorId":null,"operatorName":null,"remark":null},{"userId":117,"applicationId":23,"applyDate":"2016-10-26 00:00:00","auditDate":null,"startDate":"2016-08-11 00:00:00","endDate":"2016-08-12 00:00:00","reason":"aaaaa","applyType":1,"result":1,"operatorId":null,"operatorName":null,"remark":null},{"userId":117,"applicationId":24,"applyDate":"2016-10-27 00:00:00","auditDate":null,"startDate":"2016-08-11 00:00:00","endDate":"2016-08-12 00:00:00","reason":"aaaaa","applyType":1,"result":1,"operatorId":null,"operatorName":null,"remark":null},{"userId":117,"applicationId":25,"applyDate":"2016-10-27 00:00:00","auditDate":null,"startDate":"2016-08-11 00:00:00","endDate":"2016-08-12 00:00:00","reason":"no reason","applyType":1,"result":1,"operatorId":null,"operatorName":null,"remark":null}]}
+      response: { "status":"success", "data":[ { "applyId":"777", "type":"年假", "reason":"累了", "handOver":"老大", "startDate":"2016-8-11", "endDate":"2016-8-12", "status": "agreee"|"disagree"|"undetermined" }  ] }
     },
     {
       // 模拟获取需要自己审批的接口列表

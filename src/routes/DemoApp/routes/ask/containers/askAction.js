@@ -21,8 +21,8 @@ export function submit(value) {
     formData.append('end', value.end)
 
     return fetchPro(api('ask:apply'), {
-      method: 'POST',
       credentials: 'include',
+      method: 'POST',
       body: formData
     }).then(response => response.json())
       .catch((e) => {

@@ -2,11 +2,16 @@ import demo from './demo.js'
 import base from './base.js'
 import ask from './ask.js'
 import me from './me.js'
+
+const host = 'http://10.235.110.31:8888/attendence-system'
+const baseObj = base(host)
+const askObj = ask(host)
+const meObj = me(host)
 const apiMap = {
   demo,
-  base,
-  ask,
-  me
+  base: baseObj,
+  ask: askObj,
+  me: meObj
 }
 
 const api = (path, ...args) => {
@@ -24,3 +29,6 @@ const api = (path, ...args) => {
 }
 
 export default api
+export function getHost() {
+  return host
+}

@@ -1,8 +1,5 @@
-const base = {
-  // 不带参数
-  login: 'http://121.42.202.145:8888/attendence-system/user/login',
-  // 带参数
-  demo2: (user) => `http://demo2/${user}`
+export default function base(host) {
+  return {
+    login: `${host}/user/login.do`,
+  }
 }
-
-export default base

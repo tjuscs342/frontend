@@ -8,7 +8,9 @@ const initialState = Immutable.fromJS({
   success: false,
   home: location.href.split('/').length < 6,
   isMenuShow: false,
-  userName: getUser().name
+  userName: getUser().name,
+  baseName: '',
+  bossName: ''
 })
 
 /* eslint-disable no-unused-vars, arrow-body-style */
@@ -17,11 +19,13 @@ const reducerMap = {
     return state.update('isShowLogin', (oldData) => Immutable.fromJS(!oldData))
   },
   'BASE@LOGIN_DONE': (state, action) => {
+    console.log('action', action)
     return state.set('isLogining', Immutable.fromJS(false))
                 .set('success', Immutable.fromJS(action.result.success || false))
                 .set('error', Immutable.fromJS(action.result.error || false))
                 .set('msg', Immutable.fromJS(action.value.errorMsg || ''))
                 .set('userName', Immutable.fromJS(action.result.userName || ''))
+                .set('bossName', Immutable.fromJS(action.value.data.bossName))
   },
   'BASE@LOGIN_WAITING': (state, action) => {
     return state.set('isLogining', Immutable.fromJS(true))

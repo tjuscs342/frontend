@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'production') {
 mockAPIConfig = require('./mockAPIConfig').default
 
 const defaultConfig = {
-
+  credentials: 'include'
 }
 
 // function fetchLogin(url, config) {

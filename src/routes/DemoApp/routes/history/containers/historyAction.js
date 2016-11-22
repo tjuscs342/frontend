@@ -14,7 +14,7 @@ export function loadingOver() {
   }
 }
 
-export function loadTable(userName) {
+export function loadTable() {
   return (dispatch) => {
     dispatch(loadingBegin())
     return fetchPro(api('ask:apply'), {

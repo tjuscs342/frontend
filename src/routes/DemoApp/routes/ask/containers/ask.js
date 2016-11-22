@@ -220,7 +220,7 @@ class Ask extends Component {
             <Input
               {...leaderProps}
               disabled
-              value="xxxx"
+              value={this.context.bossName}
               style={{ width: '85%' }}
               />
           </FormItem>
@@ -239,6 +239,9 @@ Ask.propTypes = {
   form: React.PropTypes.object,
   state: React.PropTypes.object,
   actions: React.PropTypes.object
+}
+Ask.contextTypes = {
+  bossName: React.PropTypes.object
 }
 // eslint-disable-next-line
 Ask = Form.create({})(Ask)

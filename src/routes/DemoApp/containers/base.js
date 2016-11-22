@@ -26,7 +26,8 @@ class Base extends Component {
   }
   getChildContext() {
     return {
-      userName: this.props.state.userName
+      userName: this.props.state.userName,
+      bossName: this.props.state.bossName
     }
   }
   // 登陆框显示/隐藏
@@ -62,7 +63,7 @@ class Base extends Component {
     const error = this.props.state.error
 
     return (
-      <div style={{ height: `${window.innerHeight}px`, overflow: 'hidden' }}>
+      <div style={{ height: `${window.innerHeight}px`, overflow: 'hidden', backgroundColor: '#f3f3f3' }}>
         <div
           style={{
             display: 'inline-flex',
@@ -133,7 +134,8 @@ Base.contextTypes = {
   router: React.PropTypes.object
 }
 Base.childContextTypes = {
-  userName: React.PropTypes.string
+  userName: React.PropTypes.string,
+  bossName: React.PropTypes.string
 }
 
 function mapState(state) {

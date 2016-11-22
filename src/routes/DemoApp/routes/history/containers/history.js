@@ -32,7 +32,7 @@ const columns = [
           <p>开始时间：{record.startDate.substr(0, 10)}</p>
           <p>结束时间：{record.endDate.substr(0, 10)}</p>
           <p>请假原因：{record.reason}</p>
-          <p>主管批复：{record.remark}</p>
+          <p>主管批复：{record.remark || '未批复'}</p>
         </div>
       )
       return (
@@ -45,19 +45,27 @@ const columns = [
 ]
 
 class history extends Component {
-  componentDidMount() {
-    this.props.actions.loadTable(this.context.userName)
+  componentWillMount() {
+    this.props.actions.loadTable()
   }
   render() {
-    const pagination = {
-      defaultPageSize: 5,
-      pageSize: 5,
-      total: this.props.state.table.length,
-      showSizeChanger: false,
+    const typeMap = {
+      1: '年假'
     }
+    const dataList = this.props.state.table
     return (
-      <div>
-        <Table columns={columns} dataSource={this.props.state.table} pagination={pagination} style={{ overflow: 'scroll' }} loading={this.props.state.loading} />
+      <div style={{ height: '100%', overflow: 'auto' }}>
+        {
+          dataList.map(data => (
+            <div style={{ background: '#eaedf7', height: 300, marginTop: 20, borderRadius: 10, padding: 10, fontSize: 15 }}>
+              <div>请假开始时间: {data.startDate.substr(0, 10)}</div>
+              <div>请假结束时间: {data.endDate.substr(0, 10)}</div>
+              <div>假期类型: {typeMap[data.applyType]}</div>
+              <div>请假原因: {data.reason}</div>
+              <div>申请状态: {data.result}</div>
+            </div>
+          ))
+        }
       </div>
     )
   }
