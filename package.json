@@ -4,7 +4,7 @@
   "description": "class design for school",
   "scripts": {
     "clean": "rimraf dist",
-    "copy-static": "rm -rf ./remote-dist/static && rm ./remote-dist/index.html && cp -r ./dist/* ./remote-dist",
+    "copy-static": "rm -rf ../class-design/static && rm ../class-design/index.html && cp -r ./dist/* ../class-design",
     "build:webpack": "cross-env NODE_ENV=production webpack --config build/webpack.config.prod.js",
     "quick:build:webpack": "cross-env NODE_ENV=production webpack --config build/webpack.config.prod.quick.js --display-chunks",
     "quick:build:detail:webpack": "cross-env NODE_ENV=production webpack --config build/webpack.config.prod.quick.js --display-chunks --display-modules",

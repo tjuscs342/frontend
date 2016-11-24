@@ -31,7 +31,7 @@ class history extends Component {
         replyType[data.result].search(filterText) !== -1
       )
     }
-    dataList.sort((a, b) => a.startDate.localeCompare(b.startDate))
+    dataList.sort((a, b) => b.startDate.localeCompare(a.startDate))
     return (
       <div style={{ height: '100%', overflow: 'auto', padding: 10 }}>
         <h3 className="textCenter">历史记录</h3>
@@ -86,7 +86,7 @@ class history extends Component {
                 <span style={{ color: colorMap[data.result] }}>{replyType[data.result]}</span>
                 {
                   replyType[data.result] === '审核中' ?
-                    <span className="fs10">（<Link to={`/ask?modifyId=${data.applicationId}`}>修改</Link>）</span>
+                    <span className="fs10">（<Link to={`/ask?modifyId=${data.applicationId}&type=${data.applyType}`}>修改</Link>）</span>
                   :
                     ''
                 }

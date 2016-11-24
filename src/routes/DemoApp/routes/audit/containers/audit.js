@@ -5,20 +5,28 @@ import styles from './audit.css'
 import * as auditAction from './auditAction.js'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Input, Icon, Button } from 'antd'
+import { Input, Icon, Button, Modal } from 'antd'
 import { Link } from 'react-router'
 import { vocationType, replyType, colorMap } from 'SRC/utils/constMaps.js'
 
 class audit extends Component {
   constructor(props) {
     super(props)
+    this.handleAudit = this.handleAudit.bind(this)
     this.state = {
-      filterText: '',
-      remark: ''
+      filterText: ''
     }
   }
   componentWillMount() {
     this.props.actions.loadAuditList()
+  }
+  handleAudit(text, applicationId) {
+    console.log('ref', this.refs[applicationId].refs.input.value)
+    this.props.actions.audit(text, this.refs[applicationId].refs.input.value, applicationId)
+    Modal.success({
+      width: '90%',
+      title: '审批成功'
+    })
   }
   render() {
     let dataList = this.props.state.table
@@ -33,6 +41,7 @@ class audit extends Component {
         (data.remark !== '' && data.remark.search(filterText) !== -1)
       )
     }
+    dataList.sort((a, b) => b.startDate.localeCompare(a.startDate))
     return (
       <div style={{ height: '100%', overflow: 'auto', padding: 10 }}>
         <h3 className="textCenter">下属申请审批</h3>
@@ -61,6 +70,14 @@ class audit extends Component {
                 <div>{data.startDate.substr(0, 10)}</div>
                 <div>至</div>
                 <div>{data.endDate.substr(0, 10)}</div>
+              </div>
+              <div
+                style={{
+                  marginTop: 10
+                }}
+                >
+                <span style={{ color: '#aaaaaa' }}>申请人: </span>
+                {data.userName}
               </div>
               <div
                 style={{
@@ -104,13 +121,10 @@ class audit extends Component {
                     >
                     <span style={{ color: '#aaaaaa' }}>批复：</span>
                     <Input
+                      ref={data.applicationId}
                       type="textarea"
                       rows={2}
                       placeholder="批准与否都可填写"
-                      value={this.state.remark}
-                      onChange={(e) => this.setState({
-                        remark: e.target.value
-                      })}
                       />
                     <div
                       style={{
@@ -121,13 +135,13 @@ class audit extends Component {
                       >
                       <Button
                         style={{ backgroundColor: '#5cb85c', color: 'white' }}
-                        onClick={() => this.props.actions.audit('agree', this.state.remark)}
+                        onClick={() => this.handleAudit('agree', data.applicationId)}
                         >
                         同意
                       </Button>
                       <Button
                         style={{ backgroundColor: '#d43f3a', color: 'white' }}
-                        onClick={() => this.props.actions.audit('disagree', this.state.remark)}
+                        onClick={() => this.handleAudit('disagree', data.applicationId)}
                         >
                         拒绝
                       </Button>

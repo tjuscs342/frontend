@@ -33,14 +33,21 @@ class Ask extends Component {
       compensationTimeEnd: moment().format('YYYYMMDD')
     }
   }
+  componentDidUpdate(prevProps) {
+    if (!prevProps.state.isShowingModal && this.props.state.isShowingModal) {
+      this.showModal()
+    }
+  }
   showModal() {
-    console.log('modal', this.props.state.msg)
     if (this.props.state.msg === 'success') {
       Modal.success({
         width: '90%',
-        title: '提交成功',
+        title: this.props.location.query.type ? '修改成功' : '提交成功',
         onOk: () => {
           this.props.actions.hiddenModal()
+          this.context.router.push({
+            pathname: '/history'
+          })
         }
       })
     } else {
@@ -81,11 +88,6 @@ class Ask extends Component {
       this.props.actions.submit(values)
     })
   }
-  componentDidUpdate(prevProps) {
-    if (!prevProps.state.isShowingModal && this.props.state.isShowingModal) {
-      this.showModal()
-    }
-  }
   checkBegin(rule, value, callback) {
     if (value && value.getTime() + 86400000 < Date.now()) {
       callback(new Error('这天已经过去了!'))
@@ -102,7 +104,6 @@ class Ask extends Component {
     if (value && value.getTime() + 86400000 < Date.now()) {
       callback(new Error('这天已经过去了!'))
     } else {
-      console.log('value', value)
       if (value) {
         this.setState({
           end: moment(value.getTime()).format('YYYY-MM-DD')
@@ -181,7 +182,8 @@ class Ask extends Component {
             >
             <Select
               placeholder="请选择请假类型或加班"
-              defaultValue="1"
+              defaultValue={this.props.location.query.type ? this.props.location.query.type : '1'}
+              disabled={this.props.location.query.type ? true : false}
               style={{ width: '85%' }}
               onChange={(value) => {
                 this.setState({
@@ -302,6 +304,7 @@ Ask.propTypes = {
   actions: React.PropTypes.object
 }
 Ask.contextTypes = {
+  router: React.PropTypes.object,
   bossName: React.PropTypes.object
 }
 // eslint-disable-next-line

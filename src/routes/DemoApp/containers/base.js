@@ -30,6 +30,14 @@ class Base extends Component {
       bossName: this.props.state.bossName
     }
   }
+  componentDidMount() {
+    const page = this.props.location.pathname.split('/')[1] || ''
+    if (!page) {
+      this.context.router.push({
+        pathname: '/ask'
+      })
+    }
+  }
   // 登陆框显示/隐藏
   setVisible() {
     this.props.actions.setVisible()
@@ -128,7 +136,7 @@ Base.propTypes = {
     React.PropTypes.element
   ]),
   actions: React.PropTypes.object,
-  state: React.PropTypes.object
+  state: React.PropTypes.object,
 }
 Base.contextTypes = {
   router: React.PropTypes.object

@@ -9,8 +9,8 @@ export const vocationType = {
 }
 export const replyType = {
   1: '审核中',
-  2: '审核通过',
-  3: '审核失败'
+  2: '已批准',
+  3: '已拒绝'
 }
 export const resolveType = {
   1: '通过',

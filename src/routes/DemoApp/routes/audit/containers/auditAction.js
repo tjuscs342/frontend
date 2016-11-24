@@ -16,19 +16,21 @@ export function loadAuditList() {
   }
 }
 
-export function audit(auditStatus, remark) {
+export function audit(auditStatus, remark, applicationId) {
   return (dispatch) => {
     const formData = new FormData()
     formData.append('auditStatus', auditStatus)
     formData.append('remark', remark)
+    formData.append('applicationId', applicationId)
     fetchPro(api('audit:audit'), {
-      method: 'PUT',
+      method: 'POST',
       body: formData
     })
       .then(response => response.json)
       .catch(e => console.error('audit: audit error:', e))
       .then(json => {
         console.log('audit', json)
+        dispatch(loadAuditList())
       })
   }
 }
