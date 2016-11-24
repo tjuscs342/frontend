@@ -98,12 +98,12 @@ class MainNav extends Component {
           // </_col>
         }
         <_col span={18} styleName="main-nav-header">
-          <div className="divCenterMiddle">
+          <div className="divCenterMiddle" style={{ textAlign: 'right', paddingRight: '20' }}>
             {
               userName === '' ?
-                <Icon type="user" className="center ourColor" onClick={setVisible} />
+                <Icon type="user" className="ourColor" onClick={setVisible} />
               :
-                <div style={{ textAlign: 'right', paddingRight: 20 }}>
+                <div>
                   <span>{userName}</span>
                 </div>
             }

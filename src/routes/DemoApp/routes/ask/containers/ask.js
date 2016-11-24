@@ -57,7 +57,10 @@ class Ask extends Component {
         content:
           <div>
             <p>{this.props.state.msg}</p>
-          </div>
+          </div>,
+        onOk: () => {
+          this.props.actions.hiddenModal()
+        }
       })
     }
   }
