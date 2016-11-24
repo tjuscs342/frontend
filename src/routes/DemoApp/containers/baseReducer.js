@@ -19,13 +19,12 @@ const reducerMap = {
     return state.update('isShowLogin', (oldData) => Immutable.fromJS(!oldData))
   },
   'BASE@LOGIN_DONE': (state, action) => {
-    console.log('action', action)
     return state.set('isLogining', Immutable.fromJS(false))
                 .set('success', Immutable.fromJS(action.result.success || false))
                 .set('error', Immutable.fromJS(action.result.error || false))
                 .set('msg', Immutable.fromJS(action.value.errorMsg || ''))
                 .set('userName', Immutable.fromJS(action.result.userName || ''))
-                .set('bossName', Immutable.fromJS(action.value.data.bossName))
+                .set('bossName', Immutable.fromJS(action.value.data && action.value.data.bossName ? action.value.data.bossName : 'no'))
   },
   'BASE@LOGIN_WAITING': (state, action) => {
     return state.set('isLogining', Immutable.fromJS(true))

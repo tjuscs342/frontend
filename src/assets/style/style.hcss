@@ -35,7 +35,6 @@ html {
   width: 100%;
   position: relative;
   height: 85%;
-  padding: 10% 5%;
 }
 .footer {
   height: 5%;
@@ -181,4 +180,7 @@ to {transform: rotate(360deg)}
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+.textCenter {
+  text-align: center;
 }

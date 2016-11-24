@@ -32,8 +32,8 @@ class LeftMenu extends Component {
           </SubMenu>
           <SubMenu key="sub2" title={<span><Icon type="appstore-o" /></span>}>
             <MenuItemGroup title="请假系统">
-              <Menu.Item key="1"><Link to="/ask"><Icon type="solution" className="ourColor" />本人请假申请</Link></Menu.Item>
-              <Menu.Item key="2"><Link to="/page2"><Icon type="team" className="ourColor" />下属请假批准</Link></Menu.Item>
+              <Menu.Item key="1"><Link to="/ask"><Icon type="solution" className="ourColor" />申请请假或加班</Link></Menu.Item>
+              <Menu.Item key="2"><Link to="/audit"><Icon type="team" className="ourColor" />下属请假批准</Link></Menu.Item>
             </MenuItemGroup>
           </SubMenu>
           <SubMenu key="sub4" title={<span><Icon type="setting" /></span>}>

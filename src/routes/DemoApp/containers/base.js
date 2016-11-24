@@ -63,7 +63,7 @@ class Base extends Component {
     const error = this.props.state.error
 
     return (
-      <div style={{ height: `${window.innerHeight}px`, overflow: 'hidden', backgroundColor: '#f3f3f3' }}>
+      <div style={{ height: `${window.innerHeight}px`, overflow: 'hidden', backgroundColor: '#fefefe' }}>
         <div
           style={{
             display: 'inline-flex',

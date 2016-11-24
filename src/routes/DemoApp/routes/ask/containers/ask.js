@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './ask.css'
-import { Select, Button, DatePicker, Form, Icon, Input } from 'antd'
+import { Select, Button, DatePicker, Form, Icon, Input, Radio } from 'antd'
 const Option = Select.Option
 import moment from 'moment'
 const Modal = require('antd/lib/modal')
@@ -11,6 +11,11 @@ const FormItem = Form.Item
 import * as askActions from './askAction.js'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { vocationType } from 'SRC/utils/constMaps'
+
+const RadioButton = Radio.Button
+const RadioGroup = Radio.Group
+
 class Ask extends Component {
   constructor(props) {
     super(props)
@@ -20,8 +25,12 @@ class Ask extends Component {
     this.checkEnd = this.checkEnd.bind(this)
     this.showModal = this.showModal.bind(this)
     this.state = {
-      start: moment().format(),
-      end: moment().format()
+      start: moment().format('YYYYMMDD'),
+      end: moment().format('YYYYMMDD'),
+      vocationType: '1',
+      compensationType: '8',
+      compensationTimeStart: moment().format('YYYYMMDD'),
+      compensationTimeEnd: moment().format('YYYYMMDD')
     }
   }
   showModal() {
@@ -51,14 +60,23 @@ class Ask extends Component {
   }
   handleSubmit(e) {
     e.preventDefault()
-    this.props.form.validateFieldsAndScroll((errors, values) => {
+    this.props.form.validateFieldsAndScroll((errors, formValues) => {
       if (!!errors) {
         console.log('Errors in form!!!')
         return
       }
-      console.log('Submit!!!')
+      const values = formValues
       values.start = this.state.start
       values.end = this.state.end
+      values.handOver = this.context.bossName
+      values.type = this.state.vocationType
+      if (values.type === '7' && this.state.compensationType === '8') {
+        values.start2 = this.state.compensationTimeStart
+        values.end2 = this.state.compensationTimeEnd
+      }
+      if (this.props.location.query.modifyId) {
+        values.applyId = this.props.location.query.modifyId
+      }
       console.log('submit', values)
       this.props.actions.submit(values)
     })
@@ -95,19 +113,9 @@ class Ask extends Component {
   }
   render() {
     const { getFieldProps } = this.props.form
-    const vacationTypeProps = getFieldProps('type', {
-      rules: [
-        { required: true, message: '请选择您的假期类型' }
-      ]
-    })
     const reasonProps = getFieldProps('reason', {
       rules: [
-        { required: true, message: '请描述请假原因' }
-      ]
-    })
-    const handoverProps = getFieldProps('handOver', {
-      rules: [
-        { required: false, message: '如有交接人请填写' }
+        { required: true, message: '请描述原因' }
       ]
     })
     const vacationBeginProps = getFieldProps('start', {
@@ -115,7 +123,7 @@ class Ask extends Component {
         {
           required: true,
           type: 'date',
-          message: '请假的开始时间'
+          message: '开始时间'
         }, {
           validator: this.checkBegin
         }
@@ -129,7 +137,7 @@ class Ask extends Component {
         {
           required: true,
           type: 'date',
-          message: '请假的结束时间'
+          message: '结束时间'
         }, {
           validator: this.checkEnd
         }
@@ -155,49 +163,47 @@ class Ask extends Component {
         horizontal
         form={this.props.form}
         style={{
-          height: '100%'
+          padding: '20px 10px',
+          height: '100%',
+          overflow: 'auto',
+          position: 'relative'
         }}
         >
-        <div className="container">
+        <div>
           <FormItem
             {...formItemLayout}
             label={
               <span>
-                请假类型
+                类型
                 <Link to="/details"><Icon type="question-circle-o" className="ourColor" /></Link>
               </span>
             }
             >
-            <Select {...vacationTypeProps} placeholder="请选择假期类型" style={{ width: '85%' }}>
-              <Option value="1">带薪年假</Option>
-              <Option value="2">病假</Option>
-              <Option value="personal">事假</Option>
-              <Option value="marry">婚假</Option>
-              <Option value="diedWay">丧假路途假</Option>
-              <Option value="checkBaby">产检假</Option>
-              <Option value="lostBaby">流产假</Option>
-              <Option value="baby">产假</Option>
-              <Option value="feed">哺乳假</Option>
-              <Option value="workInjury">工伤假</Option>
+            <Select
+              placeholder="请选择请假类型或加班"
+              defaultValue="1"
+              style={{ width: '85%' }}
+              onChange={(value) => {
+                this.setState({
+                  vocationType: value
+                })
+              }}
+              >
+              {
+                Object.keys(vocationType).map(key => (
+                  <Option value={key}>{vocationType[key]}</Option>
+                ))
+              }
             </Select>
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="请假原因"
+            label="原由"
             >
             <Input
               {...reasonProps}
               type="textarea"
               rows={2}
-              style={{ width: '85%' }}
-              />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="工作交接人"
-            >
-            <Input
-              {...handoverProps}
               style={{ width: '85%' }}
               />
           </FormItem>
@@ -224,6 +230,60 @@ class Ask extends Component {
               style={{ width: '85%' }}
               />
           </FormItem>
+          {
+            this.state.vocationType === '7' ?
+              <FormItem
+                {...formItemLayout}
+                label="加班补偿方式"
+                >
+                <RadioGroup
+                  defaultValue="8"
+                  onChange={(e) => {
+                    this.setState({
+                      compensationType: e.target.value
+                    })
+                  }}
+                  >
+                  <RadioButton value="8">调休</RadioButton>
+                  <RadioButton value="9">双薪</RadioButton>
+                </RadioGroup>
+              </FormItem>
+            :
+              ''
+          }
+          {
+            this.state.compensationType === '8' && this.state.vocationType === '7' ?
+              <div>
+                <FormItem
+                  {...formItemLayout}
+                  label="调休开始时间"
+                  >
+                  <DatePicker
+                    value={this.state.compensationTimeStart}
+                    onChange={(date, dateString) => {
+                      this.setState({
+                        compensationTimeStart: dateString
+                      })
+                    }}
+                    />
+                </FormItem>
+                <FormItem
+                  {...formItemLayout}
+                  label="调休结束时间"
+                  >
+                  <DatePicker
+                    value={this.state.compensationTimeEnd}
+                    onChange={(date, dateString) => {
+                      this.setState({
+                        compensationTimeEnd: dateString
+                      })
+                    }}
+                    />
+                </FormItem>
+              </div>
+            :
+              ''
+          }
           <FormItem
             wrapperCol={{ span: 12, offset: 7 }}
             >
@@ -238,6 +298,7 @@ class Ask extends Component {
 Ask.propTypes = {
   form: React.PropTypes.object,
   state: React.PropTypes.object,
+  location: React.PropTypes.object,
   actions: React.PropTypes.object
 }
 Ask.contextTypes = {

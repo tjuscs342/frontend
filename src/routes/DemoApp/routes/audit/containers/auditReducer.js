@@ -5,7 +5,9 @@ const initialState = Immutable.fromJS({
 
 /* eslint-disable no-unused-vars, arrow-body-style */
 const reducerMap = {
-
+  'AUDIT@LOAD_TABLE': (state, action) => {
+    return state.set('table', Immutable.fromJS(action.value))
+  }
 }
 
 

@@ -1,23 +1,24 @@
 /* vim: set filetype=javascript.jsx */
 import React, { PropTypes, Component } from 'react'
 import CSSModules from 'react-css-modules'
-import styles from './history.css'
-import * as historyAction from './historyAction.js'
+import styles from './audit.css'
+import * as auditAction from './auditAction.js'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Input, Icon, Button } from 'antd'
 import { Link } from 'react-router'
-import { Input, Icon } from 'antd'
 import { vocationType, replyType, colorMap } from 'SRC/utils/constMaps.js'
 
-class history extends Component {
+class audit extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      filterText: ''
+      filterText: '',
+      remark: ''
     }
   }
   componentWillMount() {
-    this.props.actions.loadTable()
+    this.props.actions.loadAuditList()
   }
   render() {
     let dataList = this.props.state.table
@@ -28,13 +29,13 @@ class history extends Component {
         data.reason.search(filterText) !== -1 ||
         data.startDate.search(filterText) !== -1 ||
         data.endDate.search(filterText) !== -1 ||
-        replyType[data.result].search(filterText) !== -1
+        replyType[data.result].search(filterText) !== -1 ||
+        (data.remark !== '' && data.remark.search(filterText) !== -1)
       )
     }
-    dataList.sort((a, b) => a.startDate.localeCompare(b.startDate))
     return (
       <div style={{ height: '100%', overflow: 'auto', padding: 10 }}>
-        <h3 className="textCenter">历史记录</h3>
+        <h3 className="textCenter">下属申请审批</h3>
         <div style={{ marginTop: 20, marginBottom: 10 }}>
           <Icon style={{ color: '#2db7f5' }} type="search" /> 筛选:
           <Input
@@ -48,7 +49,7 @@ class history extends Component {
         </div>
         {
           dataList.map(data => (
-            <div style={{ background: '#eaedf7', height: 200, marginBottom: 20, borderRadius: 10, padding: 10, fontSize: 15 }}>
+            <div style={{ background: '#eaedf7', height: 300, marginTop: 20, borderRadius: 10, padding: 10, fontSize: 15 }}>
               <div
                 style={{
                   display: 'flex',
@@ -84,12 +85,6 @@ class history extends Component {
                 >
                 <span style={{ color: '#aaaaaa' }}>申请状态: </span>
                 <span style={{ color: colorMap[data.result] }}>{replyType[data.result]}</span>
-                {
-                  replyType[data.result] === '审核中' ?
-                    <span className="fs10">（<Link to={`/ask?modifyId=${data.applicationId}`}>修改</Link>）</span>
-                  :
-                    ''
-                }
               </div>
               {
                 data.remark ?
@@ -102,7 +97,42 @@ class history extends Component {
                     {data.remark}
                   </div>
                 :
-                  ''
+                  <div
+                    style={{
+                      marginTop: 10
+                    }}
+                    >
+                    <span style={{ color: '#aaaaaa' }}>批复：</span>
+                    <Input
+                      type="textarea"
+                      rows={2}
+                      placeholder="批准与否都可填写"
+                      value={this.state.remark}
+                      onChange={(e) => this.setState({
+                        remark: e.target.value
+                      })}
+                      />
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-around',
+                        marginTop: 10
+                      }}
+                      >
+                      <Button
+                        style={{ backgroundColor: '#5cb85c', color: 'white' }}
+                        onClick={() => this.props.actions.audit('agree', this.state.remark)}
+                        >
+                        同意
+                      </Button>
+                      <Button
+                        style={{ backgroundColor: '#d43f3a', color: 'white' }}
+                        onClick={() => this.props.actions.audit('disagree', this.state.remark)}
+                        >
+                        拒绝
+                      </Button>
+                    </div>
+                  </div>
               }
             </div>
           ))
@@ -111,21 +141,20 @@ class history extends Component {
     )
   }
 }
-history.propTypes = {
-  actions: React.PropTypes.object,
-  state: React.PropTypes.object
-}
-history.contextTypes = {
-  userName: React.PropTypes.string
+
+audit.propTypes = {
+  state: React.PropTypes.object,
+  actions: React.PropTypes.object
 }
 function mapState(state) {
   return {
-    state: state.history.toJS()
+    state: state.audit.toJS()
   }
 }
 function mapDispatch(dispatch) {
   return {
-    actions: bindActionCreators(historyAction, dispatch)
+    actions: bindActionCreators(auditAction, dispatch)
   }
 }
-export default connect(mapState, mapDispatch)(CSSModules(history, styles))
+
+export default connect(mapState, mapDispatch)(CSSModules(audit, styles))

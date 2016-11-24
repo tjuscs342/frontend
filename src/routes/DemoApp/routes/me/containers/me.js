@@ -6,14 +6,16 @@ import * as meAction from './meAction.js'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Row, Col } from 'antd'
-
+import { sexMap, marryMap } from 'SRC/utils/constMaps.js'
+import moment from 'moment'
 class me extends Component {
   componentWillMount() {
     this.props.actions.loadUserInfo()
   }
   render() {
     const labelStyle = {
-      textAlign: 'right',
+      textAlign: 'left',
+      color: '#2db7f5',
       fontSize: '1.5rem'
     }
     const valueStyle = {
@@ -21,11 +23,12 @@ class me extends Component {
       fontSize: '1.5rem'
     }
     const rowStyle = {
-      marginBottom: '1rem'
+      marginBottom: '2rem',
+      borderBottom: '1px solid #dcdddd'
     }
-    const userInfo = this.props.state.userInfo
+    const userInfo = this.props.state.userInfo || {}
     return (
-      <div>
+      <div style={{ padding: 20 }}>
         <Row gutter={10} style={rowStyle}>
           <Col span={8} style={labelStyle}>
             <span>用户名</span><span>:</span>
@@ -39,7 +42,7 @@ class me extends Component {
             <span>性别</span><span>:</span>
           </Col>
           <Col span={15} style={valueStyle}>
-            <span>{userInfo.sex}</span>
+            <span>{sexMap[userInfo.sex]}</span>
           </Col>
         </Row>
         <Row gutter={10} style={rowStyle}>
@@ -63,18 +66,25 @@ class me extends Component {
             <span>婚姻状态</span><span>:</span>
           </Col>
           <Col span={15} style={valueStyle}>
-            <span>{userInfo.marryTimes}</span>
+            <span>{marryMap[userInfo.marryTimes]}</span>
           </Col>
         </Row>
         <Row gutter={10} style={rowStyle}>
           <Col span={8} style={labelStyle}>
-            <span>级别</span><span>:</span>
+            <span>子女数</span><span>:</span>
           </Col>
           <Col span={15} style={valueStyle}>
-            <span>{userInfo.userPower}</span>
+            <span>{userInfo.childNum}</span>
           </Col>
         </Row>
-
+        <Row gutter={10} style={rowStyle}>
+          <Col span={8} style={labelStyle}>
+            <span>入职时间</span><span>:</span>
+          </Col>
+          <Col span={15} style={valueStyle}>
+            <span>{moment(userInfo.gmtCreate).format('YYYY-MM-DD')}</span>
+          </Col>
+        </Row>
       </div>
     )
   }

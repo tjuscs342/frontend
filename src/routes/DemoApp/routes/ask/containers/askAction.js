@@ -19,12 +19,15 @@ export function submit(value) {
     formData.append('handOver', value.handOver)
     formData.append('start', value.start)
     formData.append('end', value.end)
-
-    return fetchPro(api('ask:apply'), {
+    if (value.applyId) {
+      formData.append('applyId', value.applyId)
+    }
+    fetchPro(api('ask:apply'), {
       credentials: 'include',
-      method: 'POST',
+      method: value.applyId ? 'PUT' : 'POST',
       body: formData
-    }).then(response => response.json())
+    })
+      .then(response => response.json())
       .catch((e) => {
         logger.error(e)
       })
@@ -35,5 +38,25 @@ export function submit(value) {
           value: json
         })
       })
+    if (value.type === '7') {
+      const formData2 = new FormData()
+      formData2.append('type', value.start2 && value.end2 ? '8' : '9')
+      formData2.append('reason', value.reason)
+      formData2.append('handOver', value.handOver)
+      formData2.append('start', value.start2 ? value.start2 : value.start)
+      formData2.append('end', value.end2 ? value.end2 : value.end)
+      if (value.applyId) {
+        formData2.append('applyId', value.applyId)
+      }
+      fetchPro(api('ask:apply'), {
+        method: value.applyId ? 'PUT' : 'POST',
+        body: formData2
+      })
+        .then(response => response.json())
+        .catch(e => console.error('type 7 error: ', e))
+        .then(json => {
+          console.log('type 7', json)
+        })
+    }
   }
 }
