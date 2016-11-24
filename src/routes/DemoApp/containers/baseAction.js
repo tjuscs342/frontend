@@ -68,10 +68,8 @@ export function login(userName, password) {
       body: bodyData
     }).then(response => response.json())
       .catch((e) => {
-        logger.error(e)
       })
       .then(json => {
-        console.log(json)
         return dispatch(loginDone(json, userName))
       })
   }

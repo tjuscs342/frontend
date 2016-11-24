@@ -83,11 +83,7 @@ class MainNav extends Component {
           </div>
 
         </_col>
-        <_col span={12} styleName="main-nav-header">
-          <div styleName="productName" className="divLeftMiddle">
 
-          </div>
-        </_col>
         {
           // <_col span={14} styleName="main-nav-header">
           //   <div className="divCenterBottom">
@@ -101,13 +97,13 @@ class MainNav extends Component {
           //   </div>
           // </_col>
         }
-        <_col span={6} styleName="main-nav-header">
+        <_col span={18} styleName="main-nav-header">
           <div className="divCenterMiddle">
             {
               userName === '' ?
                 <Icon type="user" className="center ourColor" onClick={setVisible} />
               :
-                <div style={{ textAlign: 'center' }}>
+                <div style={{ textAlign: 'right', paddingRight: 20 }}>
                   <span>{userName}</span>
                 </div>
             }

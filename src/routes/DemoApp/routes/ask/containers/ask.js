@@ -69,7 +69,6 @@ class Ask extends Component {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((errors, formValues) => {
       if (!!errors) {
-        console.log('Errors in form!!!')
         return
       }
       const values = formValues
@@ -84,7 +83,6 @@ class Ask extends Component {
       if (this.props.location.query.modifyId) {
         values.applyId = this.props.location.query.modifyId
       }
-      console.log('submit', values)
       this.props.actions.submit(values)
     })
   }
@@ -176,7 +174,6 @@ class Ask extends Component {
             label={
               <span>
                 类型
-                <Link to="/details"><Icon type="question-circle-o" className="ourColor" /></Link>
               </span>
             }
             >
@@ -197,6 +194,7 @@ class Ask extends Component {
                 ))
               }
             </Select>
+            <Link to="/details"> <Icon type="question-circle-o" className="ourColor" /></Link>
           </FormItem>
           <FormItem
             {...formItemLayout}

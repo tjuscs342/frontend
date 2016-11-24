@@ -55,7 +55,6 @@ export function submit(value) {
         .then(response => response.json())
         .catch(e => console.error('type 7 error: ', e))
         .then(json => {
-          console.log('type 7', json)
         })
       }
     } else {
@@ -69,7 +68,6 @@ export function submit(value) {
         logger.error(e)
       })
       .then(json => {
-        console.log('json', json)
         dispatch({
           type: 'ASK@SUBMIT_DONE',
           value: json
@@ -92,7 +90,6 @@ export function submit(value) {
         .then(response => response.json())
         .catch(e => console.error('type 7 error: ', e))
         .then(json => {
-          console.log('type 7', json)
         })
       }
     }

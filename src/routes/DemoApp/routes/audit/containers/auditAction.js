@@ -29,7 +29,6 @@ export function audit(auditStatus, remark, applicationId) {
       .then(response => response.json)
       .catch(e => console.error('audit: audit error:', e))
       .then(json => {
-        console.log('audit', json)
         dispatch(loadAuditList())
       })
   }

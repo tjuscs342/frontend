@@ -23,7 +23,6 @@ export function loadTable() {
       .then(response => response.json())
       .catch((e) => logger.error(e))
       .then(json => {
-        console.log('json', json)
         dispatch({
           type: 'HISTORY@LOAD_TABLE',
           value: json.status === 'success' ? json.data : []

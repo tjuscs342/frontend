@@ -12,7 +12,6 @@ export function loadUserInfo() {
         logger.error(e)
       })
       .then(json => {
-        console.log('json', json)
         dispatch({
           type: 'ME@LOAD_USER_INFO',
           value: json

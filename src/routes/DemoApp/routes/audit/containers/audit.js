@@ -21,7 +21,6 @@ class audit extends Component {
     this.props.actions.loadAuditList()
   }
   handleAudit(text, applicationId) {
-    console.log('ref', this.refs[applicationId].refs.input.value)
     this.props.actions.audit(text, this.refs[applicationId].refs.input.value, applicationId)
     Modal.success({
       width: '90%',
@@ -41,7 +40,7 @@ class audit extends Component {
         (data.remark !== '' && data.remark.search(filterText) !== -1)
       )
     }
-    dataList.sort((a, b) => b.startDate.localeCompare(a.startDate))
+    dataList.sort((a, b) => b.applicationId - a.applicationId)
     return (
       <div style={{ height: '100%', overflow: 'auto', padding: 10 }}>
         <h3 className="textCenter">下属申请审批</h3>

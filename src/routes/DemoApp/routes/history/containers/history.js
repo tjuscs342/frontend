@@ -31,7 +31,7 @@ class history extends Component {
         replyType[data.result].search(filterText) !== -1
       )
     }
-    dataList.sort((a, b) => b.startDate.localeCompare(a.startDate))
+    dataList.sort((a, b) => b.applicationId - a.applicationId)
     return (
       <div style={{ height: '100%', overflow: 'auto', padding: 10 }}>
         <h3 className="textCenter">历史记录</h3>

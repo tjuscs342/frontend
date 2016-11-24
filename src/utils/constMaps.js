@@ -5,7 +5,9 @@ export const vocationType = {
   4: '事假',
   5: '产假',
   6: '陪产假',
-  7: '加班'
+  7: '加班',
+  8: '调休',
+  9: '双薪'
 }
 export const replyType = {
   1: '审核中',
