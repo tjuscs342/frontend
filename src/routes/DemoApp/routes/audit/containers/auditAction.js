@@ -1,6 +1,12 @@
 import fetchPro from 'SRC/utils/fetchPro'
 import api from 'SRC/api'
 
+export function init() {
+  return {
+    type: 'AUDIT@INIT'
+  }
+}
+
 export function loadAuditList() {
   return (dispatch) => {
     fetchPro(api('audit:loadAuditList'))
@@ -18,6 +24,7 @@ export function loadAuditList() {
 
 export function audit(auditStatus, remark, applicationId) {
   return (dispatch) => {
+    dispatch(init())
     const formData = new FormData()
     formData.append('auditStatus', auditStatus)
     formData.append('remark', remark)

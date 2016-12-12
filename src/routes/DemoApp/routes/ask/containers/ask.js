@@ -12,6 +12,7 @@ import * as askActions from './askAction.js'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { vocationType } from 'SRC/utils/constMaps'
+import { getCookie } from 'SRC/utils/cookie'
 
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
@@ -229,7 +230,7 @@ class Ask extends Component {
             <Input
               {...leaderProps}
               disabled
-              value={this.context.bossName}
+              value={getCookie('boss')}
               style={{ width: '85%' }}
               />
           </FormItem>

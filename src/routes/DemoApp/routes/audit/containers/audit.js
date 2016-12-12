@@ -35,12 +35,18 @@ class audit extends Component {
         vocationType[data.applyType].search(filterText) !== -1 ||
         data.reason.search(filterText) !== -1 ||
         data.startDate.search(filterText) !== -1 ||
+        data.userName.search(filterText) !== -1 ||
         data.endDate.search(filterText) !== -1 ||
         replyType[data.result].search(filterText) !== -1 ||
-        (data.remark !== '' && data.remark.search(filterText) !== -1)
+        (data.remark && data.remark.search(filterText) !== -1)
       )
     }
-    dataList.sort((a, b) => b.applicationId - a.applicationId)
+    dataList.sort((a, b) => {
+      return a.result === b.result ?
+        b.applicationId - a.applicationId
+      :
+        a.result - b.result
+    })
     return (
       <div style={{ height: '100%', overflow: 'auto', padding: 10 }}>
         <h3 className="textCenter">下属申请审批</h3>
@@ -57,7 +63,7 @@ class audit extends Component {
         </div>
         {
           dataList.map(data => (
-            <div style={{ background: '#eaedf7', height: 300, marginTop: 20, borderRadius: 10, padding: 10, fontSize: 15 }}>
+            <div style={{ background: '#eaedf7', minHeight: 340, marginTop: 20, borderRadius: 10, padding: 10, fontSize: 15 }}>
               <div
                 style={{
                   display: 'flex',
@@ -77,6 +83,14 @@ class audit extends Component {
                 >
                 <span style={{ color: '#aaaaaa' }}>申请人: </span>
                 {data.userName}
+              </div>
+              <div
+                style={{
+                  marginTop: 10
+                }}
+                >
+                <span style={{ color: '#aaaaaa' }}>申请时间: </span>
+                {data.applyDate.substr(0, 10)}
               </div>
               <div
                 style={{
@@ -103,7 +117,7 @@ class audit extends Component {
                 <span style={{ color: colorMap[data.result] }}>{replyType[data.result]}</span>
               </div>
               {
-                data.remark ?
+                data.result !== 1 ?
                   <div
                     style={{
                       marginTop: 10

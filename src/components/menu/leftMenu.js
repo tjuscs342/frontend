@@ -39,7 +39,18 @@ class LeftMenu extends Component {
           <SubMenu key="sub4" title={<span><Icon type="setting" /></span>}>
             <Menu.Item key="9"><Link to="/me"><Icon type="user" className="ourColor" />个人信息</Link></Menu.Item>
             <Menu.Item key="10" style={{ display: 'none' }}>选项10</Menu.Item>
-            <Menu.Item key="12"><span onClick={this.props.logout}><Icon type="logout" className="ourColor" />退出登录</span></Menu.Item>
+            <Menu.Item
+              key="12"
+              >
+              <div
+                onClick={() => {
+                  console.log('logout')
+                  this.props.logout()
+                }}
+                >
+                <span><Icon type="logout" className="ourColor" />退出登录</span>
+              </div>
+            </Menu.Item>
           </SubMenu>
         </Menu>
       </div>

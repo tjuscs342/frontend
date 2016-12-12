@@ -48,7 +48,7 @@ class history extends Component {
         </div>
         {
           dataList.map(data => (
-            <div style={{ background: '#eaedf7', height: 200, marginBottom: 20, borderRadius: 10, padding: 10, fontSize: 15 }}>
+            <div style={{ background: '#eaedf7', minHeight: 200, marginBottom: 20, borderRadius: 10, padding: 10, fontSize: 15 }}>
               <div
                 style={{
                   display: 'flex',
@@ -68,6 +68,14 @@ class history extends Component {
                 >
                 <span style={{ color: '#aaaaaa' }}>申请类型: </span>
                 {vocationType[data.applyType]}
+              </div>
+              <div
+                style={{
+                  marginTop: 10
+                }}
+                >
+                <span style={{ color: '#aaaaaa' }}>申请时间: </span>
+                {data.applyDate.substr(0, 10)}
               </div>
               <div
                 style={{

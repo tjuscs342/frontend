@@ -2,6 +2,7 @@ import fetchPro from 'SRC/utils/fetchPro'
 import api from 'SRC/api'
 import getUser, { setUser } from 'SRC/utils/getUser'
 import logger from 'SRC/utils/logger'
+import { setCookie } from 'SRC/utils/cookie'
 // 登陆框是否可见
 export function setVisible() {
   return {
@@ -23,6 +24,8 @@ function loginDone(value, userName) {
   }
   if (result.success) {
     setUser(userName, 2)
+    const boss = value.data.bossName || '您已是高管'
+    setCookie('boss', boss, 1)
   }
   return {
     type: 'BASE@LOGIN_DONE',

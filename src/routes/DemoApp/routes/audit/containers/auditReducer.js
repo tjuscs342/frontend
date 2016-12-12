@@ -7,6 +7,9 @@ const initialState = Immutable.fromJS({
 const reducerMap = {
   'AUDIT@LOAD_TABLE': (state, action) => {
     return state.set('table', Immutable.fromJS(action.value))
+  },
+  'AUDIT@INIT': (state, action) => {
+    return state.set('table', Immutable.fromJS([]))
   }
 }
 
