@@ -26,8 +26,9 @@ class history extends Component {
       dataList = dataList.filter(data =>
         vocationType[data.applyType].search(filterText) !== -1 ||
         data.reason.search(filterText) !== -1 ||
-        data.startDate.search(filterText) !== -1 ||
-        data.endDate.search(filterText) !== -1 ||
+        data.startDate.substr(0, 10).search(filterText) !== -1 ||
+        data.applyDate.substr(0, 10).search(filterText) !== -1 ||
+        data.endDate.substr(0, 10).search(filterText) !== -1 ||
         replyType[data.result].search(filterText) !== -1
       )
     }
