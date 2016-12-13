@@ -26,12 +26,12 @@ class Ask extends Component {
     this.checkEnd = this.checkEnd.bind(this)
     this.showModal = this.showModal.bind(this)
     this.state = {
-      start: moment().format('YYYYMMDD'),
-      end: moment().format('YYYYMMDD'),
+      start: moment().format('YYYY-MM-DD'),
+      end: moment().format('YYYY-MM-DD'),
       vocationType: '1',
       compensationType: '8',
-      compensationTimeStart: moment().format('YYYYMMDD'),
-      compensationTimeEnd: moment().format('YYYYMMDD')
+      compensationTimeStart: moment().format('YYYY-MM-DD'),
+      compensationTimeEnd: moment().format('YYYY-MM-DD')
     }
   }
   componentDidUpdate(prevProps) {
@@ -103,12 +103,16 @@ class Ask extends Component {
     }
   }
   checkEnd(rule, value, callback) {
+    const stringDate = moment(value.getTime()).format('YYYY-MM-DD')
+    console.log(this.state.start, stringDate)
     if (value && value.getTime() + 86400000 < Date.now()) {
       callback(new Error('这天已经过去了!'))
+    } else if (this.state.start.localeCompare(stringDate) > 0) {
+      callback(new Error('不能晚于开始日期'))
     } else {
       if (value) {
         this.setState({
-          end: moment(value.getTime()).format('YYYY-MM-DD')
+          end: stringDate
         })
       }
       callback()
